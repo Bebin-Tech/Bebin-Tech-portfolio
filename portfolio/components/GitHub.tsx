@@ -1,53 +1,155 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
-import { Star, GitFork, ExternalLink, Users, BookOpen, GitCommit } from "lucide-react";
+import { useRef, useEffect, useMemo, useState } from "react";
+import { ExternalLink, GitFork, Star, Users, BookOpen, Clock } from "lucide-react";
 import { FaGithub } from "react-icons/fa6";
-import { githubData } from "@/data/portfolio";
+import { githubData, personalInfo } from "@/data/portfolio";
 
 function useInView(threshold = 0.1) {
   const ref = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(false);
+
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) setInView(true);
     }, { threshold });
+
     observer.observe(el);
     return () => observer.disconnect();
   }, [threshold]);
+
   return { ref, inView };
 }
 
-// Generate a stable, realistic-looking contribution grid (52 weeks x 7 days).
-function contributionLevel(week: number, day: number) {
-  const hash = (week + 1) * 37 + (day + 3) * 17 + ((week + day) % 11) * 13;
-  const r = (Math.sin(hash) + 1) / 2;
+type GitHubProfile = {
+  login: string;
+  html_url: string;
+  public_repos: number;
+  followers: number;
+};
 
-  if (r < 0.35) return 0;
-  if (r < 0.6) return 1;
-  if (r < 0.8) return 2;
-  if (r < 0.93) return 3;
-  return 4;
-}
+type GitHubRepo = {
+  id: number;
+  name: string;
+  html_url: string;
+  description: string | null;
+  language: string | null;
+  stargazers_count: number;
+  forks_count: number;
+  pushed_at: string | null;
+  archived: boolean;
+  fork: boolean;
+};
 
-function generateContributions() {
-  const weeks: number[][] = [];
-  for (let w = 0; w < 52; w++) {
-    const days: number[] = [];
-    for (let d = 0; d < 7; d++) {
-      days.push(contributionLevel(w, d));
-    }
-    weeks.push(days);
+type GitHubSnapshot = {
+  profile: GitHubProfile;
+  repos: GitHubRepo[];
+};
+
+const languageColors: Record<string, string> = {
+  Dart: "#00b4ab",
+  JavaScript: "#f7df1e",
+  Python: "#3776ab",
+  TypeScript: "#3178c6",
+  HTML: "#e34f26",
+  CSS: "#1572b6",
+  Java: "#b07219",
+  PHP: "#777bb4",
+  Shell: "#89e051",
+};
+
+function getGitHubUsername() {
+  try {
+    const url = new URL(personalInfo.github);
+    const [username] = url.pathname.split("/").filter(Boolean);
+    return username || githubData.username;
+  } catch {
+    return githubData.username;
   }
-  return weeks;
 }
 
-const contributions = generateContributions();
+function formatUpdatedDate(value: string | null) {
+  if (!value) return "No recent pushes";
+
+  return new Intl.DateTimeFormat("en", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(new Date(value));
+}
+
+function getRepoScore(repo: GitHubRepo) {
+  return repo.stargazers_count * 2 + repo.forks_count + (repo.fork ? 0 : 1);
+}
 
 export default function GitHub() {
   const { ref, inView } = useInView(0.1);
+  const username = getGitHubUsername();
+  const [snapshot, setSnapshot] = useState<GitHubSnapshot | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function loadGitHub() {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const [profileResponse, reposResponse] = await Promise.all([
+          fetch(`https://api.github.com/users/${username}`, {
+            signal: controller.signal,
+            headers: { Accept: "application/vnd.github+json" },
+          }),
+          fetch(`https://api.github.com/users/${username}/repos?type=owner&sort=updated&per_page=100`, {
+            signal: controller.signal,
+            headers: { Accept: "application/vnd.github+json" },
+          }),
+        ]);
+
+        if (!profileResponse.ok || !reposResponse.ok) {
+          throw new Error("GitHub profile unavailable");
+        }
+
+        const profile = (await profileResponse.json()) as GitHubProfile;
+        const repos = (await reposResponse.json()) as GitHubRepo[];
+        setSnapshot({ profile, repos: repos.filter((repo) => !repo.archived) });
+      } catch (err) {
+        if (err instanceof DOMException && err.name === "AbortError") return;
+        setError("GitHub activity is unavailable right now.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadGitHub();
+    return () => controller.abort();
+  }, [username]);
+
+  const repos = useMemo(() => snapshot?.repos ?? [], [snapshot]);
+  const totalStars = repos.reduce((sum, repo) => sum + repo.stargazers_count, 0);
+  const totalForks = repos.reduce((sum, repo) => sum + repo.forks_count, 0);
+  const visibleRepos = useMemo(
+    () =>
+      [...repos]
+        .sort((a, b) => {
+          const scoreDiff = getRepoScore(b) - getRepoScore(a);
+          if (scoreDiff !== 0) return scoreDiff;
+          return new Date(b.pushed_at ?? 0).getTime() - new Date(a.pushed_at ?? 0).getTime();
+        }),
+    [repos]
+  );
+
+  const stats = [
+    { icon: <BookOpen size={18} />, value: snapshot?.profile.public_repos ?? 0, label: "Public Repos" },
+    { icon: <Star size={18} />, value: totalStars, label: "Stars" },
+    { icon: <GitFork size={18} />, value: totalForks, label: "Forks" },
+    { icon: <Users size={18} />, value: snapshot?.profile.followers ?? 0, label: "Followers" },
+  ];
 
   return (
     <section
@@ -68,11 +170,10 @@ export default function GitHub() {
           <p className="section-label">Open Source</p>
           <h2 className="section-title">GitHub Activity</h2>
           <p className="section-subtitle">
-            Consistently shipping code and contributing to the developer community.
+            Public repositories, stars, forks, and profile stats from GitHub.
           </p>
         </div>
 
-        {/* GitHub stats */}
         <div
           style={{
             display: "grid",
@@ -84,12 +185,7 @@ export default function GitHub() {
           }}
           className="github-stats"
         >
-          {[
-            { icon: <BookOpen size={18} />, value: githubData.stats.repos, label: "Repositories" },
-            { icon: <Star size={18} />, value: githubData.stats.stars, label: "Stars Earned" },
-            { icon: <Users size={18} />, value: githubData.stats.followers, label: "Followers" },
-            { icon: <GitCommit size={18} />, value: githubData.stats.contributions, label: "Contributions" },
-          ].map((stat) => (
+          {stats.map((stat) => (
             <div
               key={stat.label}
               className="glass card"
@@ -110,14 +206,13 @@ export default function GitHub() {
                   marginBottom: "0.25rem",
                 }}
               >
-                {stat.value.toLocaleString()}
+                {loading ? "..." : stat.value.toLocaleString()}
               </div>
               <div style={{ fontSize: "0.78rem", color: "var(--text-muted)" }}>{stat.label}</div>
             </div>
           ))}
         </div>
 
-        {/* Contribution Graph */}
         <div
           className="card"
           style={{
@@ -126,7 +221,6 @@ export default function GitHub() {
             marginBottom: "2.5rem",
             opacity: inView ? 1 : 0,
             transition: "opacity 0.6s ease 0.2s",
-            overflowX: "auto",
           }}
         >
           <div
@@ -134,14 +228,21 @@ export default function GitHub() {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              marginBottom: "1.25rem",
+              gap: "1rem",
+              marginBottom: "1.5rem",
+              flexWrap: "wrap",
             }}
           >
-            <h3 style={{ fontSize: "0.9rem", fontWeight: 600, color: "var(--text-primary)" }}>
-              Contribution Activity · Last 12 months
-            </h3>
+            <div>
+              <h3 style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.25rem" }}>
+                Public Repository Snapshot
+              </h3>
+              <p style={{ fontSize: "0.78rem", color: "var(--text-muted)" }}>
+                {loading ? "Loading GitHub profile..." : `${visibleRepos.length} repositories shown from @${snapshot?.profile.login ?? username}`}
+              </p>
+            </div>
             <a
-              href={`https://github.com/${githubData.username}`}
+              href={snapshot?.profile.html_url ?? personalInfo.github}
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -153,133 +254,106 @@ export default function GitHub() {
                 textDecoration: "none",
               }}
             >
-              @{githubData.username}
+              @{snapshot?.profile.login ?? username}
               <ExternalLink size={12} />
             </a>
           </div>
 
-          <div style={{ display: "flex", gap: "3px", minWidth: "fit-content" }}>
-            {contributions.map((week, wi) => (
-              <div key={wi} style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
-                {week.map((level, di) => (
-                  <div
-                    key={di}
-                    className={`contrib-${level}`}
-                    title={`Contributions: ${level * 2}`}
-                    style={{
-                      width: "12px",
-                      height: "12px",
-                      borderRadius: "2px",
-                      transition: "transform 0.1s ease",
-                      cursor: "default",
-                    }}
-                    onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.transform = "scale(1.4)")}
-                    onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.transform = "scale(1)")}
-                  />
-                ))}
-              </div>
-            ))}
-          </div>
-
-          {/* Legend */}
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginTop: "0.75rem", justifyContent: "flex-end" }}>
-            <span style={{ fontSize: "0.7rem", color: "var(--text-muted)" }}>Less</span>
-            {[0, 1, 2, 3, 4].map((l) => (
-              <div key={l} className={`contrib-${l}`} style={{ width: "10px", height: "10px", borderRadius: "2px" }} />
-            ))}
-            <span style={{ fontSize: "0.7rem", color: "var(--text-muted)" }}>More</span>
-          </div>
-        </div>
-
-        {/* Pinned repos */}
-        <div
-          style={{
-            opacity: inView ? 1 : 0,
-            transition: "opacity 0.6s ease 0.3s",
-          }}
-        >
-          <h3
-            style={{
-              fontSize: "0.85rem",
-              fontWeight: 700,
-              color: "var(--text-muted)",
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              marginBottom: "1.25rem",
-            }}
-          >
-            Pinned Repositories
-          </h3>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-              gap: "1rem",
-            }}
-          >
-            {githubData.repos.map((repo) => (
-              <a
-                key={repo.name}
-                href={repo.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  textDecoration: "none",
-                  display: "block",
-                }}
-              >
-                <div
-                  className="card"
-                  style={{ height: "100%" }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(6,182,212,0.35)";
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.borderColor = "var(--border)";
-                  }}
-                >
-                  <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", marginBottom: "0.75rem" }}>
-                    <FaGithub size={18} style={{ color: "var(--text-muted)", flexShrink: 0, marginTop: "2px" }} />
-                    <h4
+          {error ? (
+            <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem" }}>{error}</p>
+          ) : (
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+                gap: "1rem",
+              }}
+            >
+              {(loading ? Array.from({ length: 3 }) : visibleRepos).map((repo, index) => {
+                if (loading) {
+                  return (
+                    <div
+                      key={index}
+                      className="glass"
                       style={{
-                        fontSize: "0.9rem",
-                        fontWeight: 600,
-                        color: "var(--accent)",
-                        fontFamily: "var(--font-mono)",
+                        borderRadius: "0.75rem",
+                        minHeight: "150px",
+                        border: "1px solid var(--border)",
+                      }}
+                    />
+                  );
+                }
+
+                const typedRepo = repo as GitHubRepo;
+                const language = typedRepo.language ?? "Code";
+                const languageColor = languageColors[language] ?? "var(--accent)";
+
+                return (
+                  <a
+                    key={typedRepo.id}
+                    href={typedRepo.html_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ textDecoration: "none", display: "block" }}
+                  >
+                    <div
+                      className="card"
+                      style={{ height: "100%" }}
+                      onMouseEnter={(e) => {
+                        (e.currentTarget as HTMLElement).style.borderColor = "rgba(6,182,212,0.35)";
+                      }}
+                      onMouseLeave={(e) => {
+                        (e.currentTarget as HTMLElement).style.borderColor = "var(--border)";
                       }}
                     >
-                      {repo.name}
-                    </h4>
-                  </div>
-                  <p style={{ fontSize: "0.82rem", color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: "1rem" }}>
-                    {repo.description}
-                  </p>
-                  <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                    <span style={{ display: "flex", alignItems: "center", gap: "0.35rem", fontSize: "0.75rem" }}>
-                      <span
-                        style={{
-                          width: "10px",
-                          height: "10px",
-                          borderRadius: "50%",
-                          background: repo.languageColor,
-                          display: "inline-block",
-                        }}
-                      />
-                      <span style={{ color: "var(--text-secondary)" }}>{repo.language}</span>
-                    </span>
-                    <span style={{ display: "flex", alignItems: "center", gap: "0.25rem", color: "var(--text-muted)", fontSize: "0.75rem" }}>
-                      <Star size={12} />
-                      {repo.stars}
-                    </span>
-                    <span style={{ display: "flex", alignItems: "center", gap: "0.25rem", color: "var(--text-muted)", fontSize: "0.75rem" }}>
-                      <GitFork size={12} />
-                      {repo.forks}
-                    </span>
-                  </div>
-                </div>
-              </a>
-            ))}
-          </div>
+                      <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", marginBottom: "0.75rem" }}>
+                        <FaGithub size={18} style={{ color: "var(--text-muted)", flexShrink: 0, marginTop: "2px" }} />
+                        <h4
+                          style={{
+                            fontSize: "0.9rem",
+                            fontWeight: 600,
+                            color: "var(--accent)",
+                            fontFamily: "var(--font-mono)",
+                          }}
+                        >
+                          {typedRepo.name}
+                        </h4>
+                      </div>
+                      <p style={{ fontSize: "0.82rem", color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: "1rem" }}>
+                        {typedRepo.description ?? "Public GitHub repository"}
+                      </p>
+                      <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
+                        <span style={{ display: "flex", alignItems: "center", gap: "0.35rem", fontSize: "0.75rem" }}>
+                          <span
+                            style={{
+                              width: "10px",
+                              height: "10px",
+                              borderRadius: "50%",
+                              background: languageColor,
+                              display: "inline-block",
+                            }}
+                          />
+                          <span style={{ color: "var(--text-secondary)" }}>{language}</span>
+                        </span>
+                        <span style={{ display: "flex", alignItems: "center", gap: "0.25rem", color: "var(--text-muted)", fontSize: "0.75rem" }}>
+                          <Star size={12} />
+                          {typedRepo.stargazers_count}
+                        </span>
+                        <span style={{ display: "flex", alignItems: "center", gap: "0.25rem", color: "var(--text-muted)", fontSize: "0.75rem" }}>
+                          <GitFork size={12} />
+                          {typedRepo.forks_count}
+                        </span>
+                        <span style={{ display: "flex", alignItems: "center", gap: "0.25rem", color: "var(--text-muted)", fontSize: "0.75rem" }}>
+                          <Clock size={12} />
+                          {formatUpdatedDate(typedRepo.pushed_at)}
+                        </span>
+                      </div>
+                    </div>
+                  </a>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
 

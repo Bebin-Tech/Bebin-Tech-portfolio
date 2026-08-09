@@ -169,7 +169,7 @@ export const education = {
 export const githubData = {
   username: "Bebin-Tech",
   stats: {
-    repos: 18,
+    repos: 14,
     stars: 45,
     followers: 28,
     contributions: 420,

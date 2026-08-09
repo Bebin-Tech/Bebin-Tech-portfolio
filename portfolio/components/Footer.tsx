@@ -1,7 +1,7 @@
 "use client";
 
 import { Mail, Heart } from "lucide-react";
-import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
+import { FaGithub, FaInstagram } from "react-icons/fa6";
 import { personalInfo } from "@/data/portfolio";
 
 export default function Footer() {
@@ -76,7 +76,7 @@ export default function Footer() {
         <div style={{ display: "flex", gap: "0.75rem" }}>
           {[
             { href: personalInfo.github, icon: <FaGithub size={17} />, label: "GitHub" },
-            { href: personalInfo.linkedin, icon: <FaLinkedinIn size={17} />, label: "LinkedIn" },
+            { href: personalInfo.instagram, icon: <FaInstagram size={17} />, label: "Instagram" },
             { href: `mailto:${personalInfo.email}`, icon: <Mail size={17} />, label: "Email" },
           ].map((social) => (
             <a

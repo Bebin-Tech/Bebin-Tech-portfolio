@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ArrowDown, Mail, Download, ExternalLink } from "lucide-react";
-import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
+import { FaGithub, FaInstagram } from "react-icons/fa6";
 import { personalInfo } from "@/data/portfolio";
 
 const titles = ["Full Stack Developer", "React Developer", "Python Engineer", "AI Enthusiast"];
@@ -229,7 +229,7 @@ export default function Hero() {
             <span style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}>Find me on</span>
             {[
               { href: personalInfo.github, icon: <FaGithub size={18} />, label: "GitHub" },
-              { href: personalInfo.linkedin, icon: <FaLinkedinIn size={18} />, label: "LinkedIn" },
+              { href: personalInfo.instagram, icon: <FaInstagram size={18} />, label: "Instagram" },
               { href: `mailto:${personalInfo.email}`, icon: <Mail size={18} />, label: "Email" },
             ].map((social) => (
               <a

@@ -11,7 +11,7 @@ export const personalInfo = {
   email: "bbebinr@gmail.com",
   phone: "+91 88073 36368",
   github: "https://github.com/Bebin-Tech",
-  linkedin: "https://linkedin.com/in/bebinr",
+  instagram: "https://www.instagram.com/bebin.tech/",
   location: "Coimbatore, Tamil Nadu, India",
   availableForWork: true,
   resumeUrl: "/resume.pdf",

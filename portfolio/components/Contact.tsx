@@ -3,7 +3,7 @@
 import { useRef, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Mail, Send, CheckCircle, MapPin, Clock } from "lucide-react";
-import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
+import { FaGithub, FaInstagram } from "react-icons/fa6";
 import { personalInfo } from "@/data/portfolio";
 
 function useInView(threshold = 0.1) {
@@ -73,11 +73,11 @@ export default function Contact() {
       color: "#06b6d4",
     },
     {
-      icon: <FaLinkedinIn size={20} />,
-      label: "LinkedIn",
-      value: "linkedin.com/in/bebinr",
-      href: personalInfo.linkedin,
-      color: "#0077b5",
+      icon: <FaInstagram size={20} />,
+      label: "Instagram",
+      value: "instagram.com/bebin.tech",
+      href: personalInfo.instagram,
+      color: "#e1306c",
     },
     {
       icon: <FaGithub size={20} />,

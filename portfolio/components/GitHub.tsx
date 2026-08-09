@@ -20,19 +20,24 @@ function useInView(threshold = 0.1) {
   return { ref, inView };
 }
 
-// Generate a realistic-looking contribution grid (52 weeks × 7 days)
+// Generate a stable, realistic-looking contribution grid (52 weeks x 7 days).
+function contributionLevel(week: number, day: number) {
+  const hash = (week + 1) * 37 + (day + 3) * 17 + ((week + day) % 11) * 13;
+  const r = (Math.sin(hash) + 1) / 2;
+
+  if (r < 0.35) return 0;
+  if (r < 0.6) return 1;
+  if (r < 0.8) return 2;
+  if (r < 0.93) return 3;
+  return 4;
+}
+
 function generateContributions() {
   const weeks: number[][] = [];
   for (let w = 0; w < 52; w++) {
     const days: number[] = [];
     for (let d = 0; d < 7; d++) {
-      // Weighted random — mostly light, some heavy
-      const r = Math.random();
-      if (r < 0.35) days.push(0);
-      else if (r < 0.6) days.push(1);
-      else if (r < 0.8) days.push(2);
-      else if (r < 0.93) days.push(3);
-      else days.push(4);
+      days.push(contributionLevel(w, d));
     }
     weeks.push(days);
   }

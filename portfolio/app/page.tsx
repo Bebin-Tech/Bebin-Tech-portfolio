@@ -17,12 +17,17 @@ export default function Home() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
 
   useEffect(() => {
-    const saved = localStorage.getItem("portfolio-theme") as "dark" | "light" | null;
-    if (saved) {
-      setTheme(saved);
-      document.documentElement.classList.toggle("light", saved === "light");
-    }
+    const timeout = setTimeout(() => {
+      const saved = localStorage.getItem("portfolio-theme") as "dark" | "light" | null;
+      if (saved) setTheme(saved);
+    }, 0);
+
+    return () => clearTimeout(timeout);
   }, []);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("light", theme === "light");
+  }, [theme]);
 
   const toggleTheme = () => {
     const next = theme === "dark" ? "light" : "dark";

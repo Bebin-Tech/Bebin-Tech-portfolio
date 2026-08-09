@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { ArrowDown, Mail, Download, ExternalLink } from "lucide-react";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
 import { personalInfo } from "@/data/portfolio";
@@ -22,7 +22,6 @@ async function buildSomethingAmazing() {
 }`;
 
 function TypingEffect({ texts }: { texts: string[] }) {
-  const [displayed, setDisplayed] = useState("");
   const [textIndex, setTextIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [deleting, setDeleting] = useState(false);
@@ -41,14 +40,17 @@ function TypingEffect({ texts }: { texts: string[] }) {
       if (charIndex > 0) {
         timeout = setTimeout(() => setCharIndex((c) => c - 1), 35);
       } else {
-        setDeleting(false);
-        setTextIndex((i) => (i + 1) % texts.length);
+        timeout = setTimeout(() => {
+          setDeleting(false);
+          setTextIndex((i) => (i + 1) % texts.length);
+        }, 35);
       }
     }
 
-    setDisplayed(current.slice(0, charIndex));
     return () => clearTimeout(timeout);
   }, [charIndex, deleting, textIndex, texts]);
+
+  const displayed = texts[textIndex].slice(0, charIndex);
 
   return (
     <span>
@@ -59,12 +61,6 @@ function TypingEffect({ texts }: { texts: string[] }) {
 }
 
 export default function Hero() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   return (
     <section
       id="hero"
@@ -123,9 +119,8 @@ export default function Hero() {
         {/* Left content */}
         <div
           style={{
-            opacity: mounted ? 1 : 0,
-            transform: mounted ? "translateY(0)" : "translateY(24px)",
-            transition: "all 0.7s ease",
+            opacity: 1,
+            transform: "translateY(0)",
           }}
         >
           {/* Available badge */}
@@ -167,7 +162,7 @@ export default function Hero() {
               letterSpacing: "-0.02em",
             }}
           >
-            Hi, I'm{" "}
+            Hi, I&apos;m{" "}
             <span className="gradient-text">{personalInfo.name}</span>
           </h1>
 
@@ -279,9 +274,8 @@ export default function Hero() {
         <div
           className="hero-code-panel"
           style={{
-            opacity: mounted ? 1 : 0,
-            transform: mounted ? "translateY(0)" : "translateY(24px)",
-            transition: "all 0.7s ease 0.2s",
+            opacity: 1,
+            transform: "translateY(0)",
           }}
         >
           <div

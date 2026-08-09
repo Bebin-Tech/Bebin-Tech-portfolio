@@ -203,7 +203,7 @@ export default function About() {
                 lineHeight: 1.7,
               }}
             >
-              "{personalInfo.philosophy}"
+              &ldquo;{personalInfo.philosophy}&rdquo;
             </blockquote>
 
             {/* Highlights */}

@@ -104,10 +104,10 @@ export default function Contact() {
             marginBottom: "3.5rem",
           }}
         >
-          <p className="section-label">Let's connect</p>
+          <p className="section-label">Let&apos;s connect</p>
           <h2 className="section-title">Get In Touch</h2>
           <p className="section-subtitle">
-            Have a project in mind or just want to say hi? I'd love to hear from you. I'm currently open to new opportunities.
+            Have a project in mind or just want to say hi? I&apos;d love to hear from you. I&apos;m currently open to new opportunities.
           </p>
         </div>
 
@@ -247,7 +247,7 @@ export default function Contact() {
                     Message Sent!
                   </h3>
                   <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem" }}>
-                    Thanks for reaching out. I'll get back to you within 24 hours.
+                    Thanks for reaching out. I&apos;ll get back to you within 24 hours.
                   </p>
                 </div>
               ) : (

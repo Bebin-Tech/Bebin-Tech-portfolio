@@ -207,7 +207,7 @@ export default function Projects() {
             marginBottom: "3.5rem",
           }}
         >
-          <p className="section-label">What I've built</p>
+          <p className="section-label">What I&apos;ve built</p>
           <h2 className="section-title">Featured Projects</h2>
           <p className="section-subtitle">
             A selection of projects that demonstrate my full-stack capabilities — from AI-powered platforms to real-time applications.

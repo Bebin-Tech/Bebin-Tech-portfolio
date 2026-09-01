@@ -1,13 +1,14 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   SiHtml5, SiCss, SiJavascript, SiTypescript, SiReact,
   SiNextdotjs, SiTailwindcss, SiPython, SiNodedotjs,
   SiExpress, SiPostman, SiMongodb, SiPostgresql, SiMysql,
   SiGit, SiGithub, SiDocker, SiVscodium, SiDart, SiFlutter, SiScikitlearn
 } from "react-icons/si";
-import { Cpu } from "lucide-react";
+import { Cpu, Sparkles, Layers } from "lucide-react";
 import { skills } from "@/data/portfolio";
 
 const iconMap: Record<string, React.ReactElement> = {
@@ -36,22 +37,11 @@ const iconMap: Record<string, React.ReactElement> = {
 };
 
 const categories = [
-  {
-    title: "Frontend & Mobile",
-    items: skills.frontend,
-  },
-  {
-    title: "Backend & Machine Learning",
-    items: skills.backend,
-  },
-  {
-    title: "Database",
-    items: skills.database,
-  },
-  {
-    title: "Tools & DevOps",
-    items: skills.tools,
-  },
+  { id: "all", title: "All Skills" },
+  { id: "frontend", title: "Frontend & Mobile", items: skills.frontend },
+  { id: "backend", title: "Backend & ML", items: skills.backend },
+  { id: "database", title: "Database", items: skills.database },
+  { id: "tools", title: "Tools & DevOps", items: skills.tools },
 ];
 
 function useInView(threshold = 0.1) {
@@ -69,35 +59,53 @@ function useInView(threshold = 0.1) {
   return { ref, inView };
 }
 
-function SkillCard({ name, icon, color, delay }: { name: string; icon: string; color: string; delay: number }) {
+function SkillCard({ name, icon, color }: { name: string; icon: string; color: string }) {
   const [hovered, setHovered] = useState(false);
 
   return (
-    <div
+    <motion.div
+      layout
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      transition={{ duration: 0.25 }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        background: hovered ? "rgba(255,255,255,0.06)" : "var(--bg-primary)",
-        border: `1px solid ${hovered ? color + "55" : "var(--border)"}`,
-        borderRadius: "0.875rem",
+        background: hovered ? "rgba(255,255,255,0.06)" : "var(--bg-surface)",
+        border: `1px solid ${hovered ? color : "var(--border)"}`,
+        borderRadius: "1rem",
         padding: "1.25rem 1rem",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: "0.6rem",
-        cursor: "default",
-        transition: "all 0.25s ease",
-        transform: hovered ? "translateY(-3px)" : "none",
-        boxShadow: hovered ? `0 0 20px ${color}22` : "none",
-        animationDelay: `${delay}ms`,
+        gap: "0.75rem",
+        cursor: "pointer",
+        position: "relative",
+        overflow: "hidden",
+        boxShadow: hovered ? `0 10px 30px ${color}33, 0 0 15px ${color}22` : "0 4px 15px rgba(0,0,0,0.2)",
+        transform: hovered ? "translateY(-4px) scale(1.03)" : "none",
+        transition: "transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease",
       }}
     >
+      {/* Background colored glow pulse on hover */}
+      {hovered && (
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: `radial-gradient(circle at center, ${color}18 0%, transparent 70%)`,
+            pointerEvents: "none",
+          }}
+        />
+      )}
+
       <span
         style={{
-          fontSize: "2rem",
-          color: hovered ? color : "var(--text-muted)",
+          fontSize: "2.2rem",
+          color: hovered ? color : "var(--text-secondary)",
           transition: "color 0.25s ease, transform 0.25s ease",
-          transform: hovered ? "scale(1.15)" : "scale(1)",
+          transform: hovered ? "scale(1.18)" : "scale(1)",
           display: "flex",
         }}
       >
@@ -105,7 +113,7 @@ function SkillCard({ name, icon, color, delay }: { name: string; icon: string; c
       </span>
       <span
         style={{
-          fontSize: "0.78rem",
+          fontSize: "0.82rem",
           fontWeight: 600,
           color: hovered ? "var(--text-primary)" : "var(--text-secondary)",
           textAlign: "center",
@@ -115,19 +123,38 @@ function SkillCard({ name, icon, color, delay }: { name: string; icon: string; c
       >
         {name}
       </span>
-    </div>
+    </motion.div>
   );
 }
 
 export default function Skills() {
   const { ref, inView } = useInView(0.1);
+  const [activeTab, setActiveTab] = useState("all");
+
+  const allSkills = [
+    ...skills.frontend,
+    ...skills.backend,
+    ...skills.database,
+    ...skills.tools,
+  ];
+
+  const getFilteredSkills = () => {
+    if (activeTab === "all") return allSkills;
+    if (activeTab === "frontend") return skills.frontend;
+    if (activeTab === "backend") return skills.backend;
+    if (activeTab === "database") return skills.database;
+    if (activeTab === "tools") return skills.tools;
+    return allSkills;
+  };
+
+  const displayedSkills = getFilteredSkills();
 
   return (
     <section
       id="skills"
       ref={ref as React.RefObject<HTMLElement>}
       className="section-padding"
-      style={{ background: "var(--bg-primary)" }}
+      style={{ background: "var(--bg-primary)", position: "relative" }}
     >
       <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
         <div
@@ -135,70 +162,84 @@ export default function Skills() {
             opacity: inView ? 1 : 0,
             transform: inView ? "translateY(0)" : "translateY(30px)",
             transition: "all 0.6s ease",
-            marginBottom: "3.5rem",
+            marginBottom: "3rem",
             textAlign: "center",
           }}
         >
-          <p className="section-label" style={{ justifyContent: "center" }}>What I work with</p>
-          <h2 className="section-title" style={{ textAlign: "center" }}>Skills & Technical Expertise</h2>
+          <p className="section-label" style={{ justifyContent: "center" }}>Technical Proficiency</p>
+          <h2 className="section-title" style={{ textAlign: "center" }}>Skills & Tech Stack</h2>
           <p className="section-subtitle" style={{ textAlign: "center", margin: "0 auto" }}>
-            A comprehensive toolkit spanning Machine Learning algorithms, Python pipelines, Mobile development, and Full-Stack Web engineering.
+            A battle-tested arsenal spanning Machine Learning, High-Performance Full-Stack Web, Modern Mobile Apps, and Scalable Cloud Architectures.
           </p>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
-          {categories.map((cat, catIdx) => (
-            <div
-              key={cat.title}
-              style={{
-                opacity: inView ? 1 : 0,
-                transform: inView ? "translateY(0)" : "translateY(30px)",
-                transition: `all 0.6s ease ${catIdx * 0.1 + 0.1}s`,
-              }}
-            >
-              <div
+        {/* Interactive Filter Pills */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            flexWrap: "wrap",
+            gap: "0.6rem",
+            marginBottom: "3rem",
+          }}
+        >
+          {categories.map((cat) => {
+            const isActive = activeTab === cat.id;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setActiveTab(cat.id)}
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.75rem",
-                  marginBottom: "1rem",
+                  background: isActive ? "var(--accent)" : "var(--glass-bg)",
+                  color: isActive ? "#000000" : "var(--text-secondary)",
+                  border: `1px solid ${isActive ? "var(--accent)" : "var(--glass-border)"}`,
+                  borderRadius: "9999px",
+                  padding: "0.5rem 1.25rem",
+                  fontSize: "0.85rem",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  transition: "all 0.25s ease",
+                  boxShadow: isActive ? "0 0 20px var(--accent-glow)" : "none",
+                }}
+                onMouseEnter={(e) => {
+                  if (!isActive) {
+                    e.currentTarget.style.color = "var(--text-primary)";
+                    e.currentTarget.style.borderColor = "var(--accent)";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive) {
+                    e.currentTarget.style.color = "var(--text-secondary)";
+                    e.currentTarget.style.borderColor = "var(--glass-border)";
+                  }
                 }}
               >
-                <h3
-                  style={{
-                    fontSize: "0.85rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    color: "var(--accent)",
-                    fontFamily: "var(--font-mono)",
-                  }}
-                >
-                  {cat.title}
-                </h3>
-                <div style={{ flex: 1, height: "1px", background: "var(--border)" }} />
-              </div>
-
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fill, minmax(110px, 1fr))",
-                  gap: "0.75rem",
-                }}
-              >
-                {cat.items.map((skill, i) => (
-                  <SkillCard
-                    key={skill.name}
-                    name={skill.name}
-                    icon={skill.icon}
-                    color={skill.color}
-                    delay={i * 40}
-                  />
-                ))}
-              </div>
-            </div>
-          ))}
+                {cat.title}
+              </button>
+            );
+          })}
         </div>
+
+        {/* Dynamic Animated Skill Grid */}
+        <motion.div
+          layout
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))",
+            gap: "1rem",
+          }}
+        >
+          <AnimatePresence>
+            {displayedSkills.map((skill) => (
+              <SkillCard
+                key={skill.name}
+                name={skill.name}
+                icon={skill.icon}
+                color={skill.color}
+              />
+            ))}
+          </AnimatePresence>
+        </motion.div>
       </div>
     </section>
   );

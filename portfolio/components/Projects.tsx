@@ -6,6 +6,7 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ExternalLink, Sparkles, FolderGit2 } from "lucide-react";
 import { FaGithub } from "react-icons/fa6";
 import { projects, personalInfo } from "@/data/portfolio";
+import { soundEffects } from "@/lib/soundEffects";
 
 function useInView(threshold = 0.1) {
   const ref = useRef<HTMLElement>(null);
@@ -57,7 +58,10 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
       }}
       className="perspective-1000"
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setHovered(true)}
+      onMouseEnter={() => {
+        soundEffects.playHover(1.15);
+        setHovered(true);
+      }}
       onMouseLeave={handleMouseLeave}
     >
       <div
@@ -181,6 +185,18 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => soundEffects.playClick()}
+              onMouseEnter={(e) => {
+                soundEffects.playHover(1.15);
+                (e.currentTarget as HTMLElement).style.color = "var(--accent)";
+                (e.currentTarget as HTMLElement).style.borderColor = "var(--accent)";
+                (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.color = "var(--text-secondary)";
+                (e.currentTarget as HTMLElement).style.borderColor = "var(--glass-border)";
+                (e.currentTarget as HTMLElement).style.transform = "none";
+              }}
               style={{
                 flex: 1,
                 display: "flex",
@@ -197,16 +213,6 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
                 textDecoration: "none",
                 transition: "all 0.2s ease",
               }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.color = "var(--accent)";
-                (e.currentTarget as HTMLElement).style.borderColor = "var(--accent)";
-                (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.color = "var(--text-secondary)";
-                (e.currentTarget as HTMLElement).style.borderColor = "var(--glass-border)";
-                (e.currentTarget as HTMLElement).style.transform = "none";
-              }}
             >
               <FaGithub size={15} />
               GitHub
@@ -216,6 +222,18 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
               href={project.live}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => soundEffects.playClick()}
+              onMouseEnter={(e) => {
+                soundEffects.playHover(1.25);
+                (e.currentTarget as HTMLElement).style.background = "var(--accent-light)";
+                (e.currentTarget as HTMLElement).style.boxShadow = "0 0 18px var(--accent-glow)";
+                (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.background = "var(--accent)";
+                (e.currentTarget as HTMLElement).style.boxShadow = "none";
+                (e.currentTarget as HTMLElement).style.transform = "none";
+              }}
               style={{
                 flex: 1,
                 display: "flex",
@@ -230,16 +248,6 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
                 fontWeight: 600,
                 textDecoration: "none",
                 transition: "all 0.2s ease",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "var(--accent-light)";
-                (e.currentTarget as HTMLElement).style.boxShadow = "0 0 18px var(--accent-glow)";
-                (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "var(--accent)";
-                (e.currentTarget as HTMLElement).style.boxShadow = "none";
-                (e.currentTarget as HTMLElement).style.transform = "none";
               }}
             >
               <ExternalLink size={15} />
@@ -305,6 +313,8 @@ export default function Projects() {
             href={personalInfo.github}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => soundEffects.playClick()}
+            onMouseEnter={() => soundEffects.playHover(1.1)}
             className="btn-secondary"
             style={{ display: "inline-flex" }}
           >

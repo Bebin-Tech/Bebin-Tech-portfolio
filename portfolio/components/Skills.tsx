@@ -10,6 +10,7 @@ import {
 } from "react-icons/si";
 import { Cpu, Sparkles, Layers } from "lucide-react";
 import { skills } from "@/data/portfolio";
+import { soundEffects } from "@/lib/soundEffects";
 
 const iconMap: Record<string, React.ReactElement> = {
   SiHtml5: <SiHtml5 />,
@@ -69,7 +70,10 @@ function SkillCard({ name, icon, color }: { name: string; icon: string; color: s
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
       transition={{ duration: 0.25 }}
-      onMouseEnter={() => setHovered(true)}
+      onMouseEnter={() => {
+        soundEffects.playHover(1.2);
+        setHovered(true);
+      }}
       onMouseLeave={() => setHovered(false)}
       style={{
         background: hovered ? "rgba(255,255,255,0.06)" : "var(--bg-surface)",
@@ -188,7 +192,23 @@ export default function Skills() {
             return (
               <button
                 key={cat.id}
-                onClick={() => setActiveTab(cat.id)}
+                onClick={() => {
+                  soundEffects.playTab();
+                  setActiveTab(cat.id);
+                }}
+                onMouseEnter={(e) => {
+                  soundEffects.playHover(1.1);
+                  if (!isActive) {
+                    e.currentTarget.style.color = "var(--text-primary)";
+                    e.currentTarget.style.borderColor = "var(--accent)";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive) {
+                    e.currentTarget.style.color = "var(--text-secondary)";
+                    e.currentTarget.style.borderColor = "var(--glass-border)";
+                  }
+                }}
                 style={{
                   background: isActive ? "var(--accent)" : "var(--glass-bg)",
                   color: isActive ? "#000000" : "var(--text-secondary)",
@@ -200,18 +220,6 @@ export default function Skills() {
                   cursor: "pointer",
                   transition: "all 0.25s ease",
                   boxShadow: isActive ? "0 0 20px var(--accent-glow)" : "none",
-                }}
-                onMouseEnter={(e) => {
-                  if (!isActive) {
-                    e.currentTarget.style.color = "var(--text-primary)";
-                    e.currentTarget.style.borderColor = "var(--accent)";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!isActive) {
-                    e.currentTarget.style.color = "var(--text-secondary)";
-                    e.currentTarget.style.borderColor = "var(--glass-border)";
-                  }
                 }}
               >
                 {cat.title}

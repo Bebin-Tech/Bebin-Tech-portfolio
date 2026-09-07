@@ -6,6 +6,7 @@ import { ArrowDown, Mail, Download, ExternalLink, Sparkles, Terminal } from "luc
 import { FaGithub, FaInstagram } from "react-icons/fa6";
 import { personalInfo } from "@/data/portfolio";
 import HeroPhotoAvatar from "./HeroPhotoAvatar";
+import { soundEffects } from "@/lib/soundEffects";
 
 const titles = [
   "Full Stack Developer",
@@ -247,21 +248,33 @@ export default function Hero() {
               className="btn-primary"
               onClick={(e) => {
                 e.preventDefault();
+                soundEffects.playClick();
                 document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
               }}
+              onMouseEnter={() => soundEffects.playHover(1.1)}
             >
               <Sparkles size={16} />
               View My Projects
               <ExternalLink size={15} />
             </a>
 
-            <a href={personalInfo.resumeUrl} download className="btn-secondary">
+            <a
+              href={personalInfo.resumeUrl}
+              download
+              className="btn-secondary"
+              onClick={() => soundEffects.playClick()}
+              onMouseEnter={() => soundEffects.playHover(1.1)}
+            >
               <Download size={15} />
               Download Resume
             </a>
 
             <button
-              onClick={() => setShowCode(!showCode)}
+              onClick={() => {
+                soundEffects.playTab();
+                setShowCode(!showCode);
+              }}
+              onMouseEnter={() => soundEffects.playHover(1.1)}
               className="btn-secondary"
               style={{
                 borderColor: showCode ? "var(--accent)" : "var(--glass-border)",
@@ -294,6 +307,20 @@ export default function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={social.label}
+                onClick={() => soundEffects.playClick()}
+                onMouseEnter={(e) => {
+                  soundEffects.playHover(1.2);
+                  (e.currentTarget as HTMLElement).style.color = "var(--accent)";
+                  (e.currentTarget as HTMLElement).style.borderColor = "var(--accent)";
+                  (e.currentTarget as HTMLElement).style.transform = "translateY(-3px) scale(1.05)";
+                  (e.currentTarget as HTMLElement).style.boxShadow = "0 0 20px var(--accent-glow)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.color = "var(--text-secondary)";
+                  (e.currentTarget as HTMLElement).style.borderColor = "var(--glass-border)";
+                  (e.currentTarget as HTMLElement).style.transform = "none";
+                  (e.currentTarget as HTMLElement).style.boxShadow = "none";
+                }}
                 style={{
                   width: "40px",
                   height: "40px",
@@ -306,18 +333,6 @@ export default function Hero() {
                   color: "var(--text-secondary)",
                   transition: "all 0.25s ease",
                   textDecoration: "none",
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.color = "var(--accent)";
-                  (e.currentTarget as HTMLElement).style.borderColor = "var(--accent)";
-                  (e.currentTarget as HTMLElement).style.transform = "translateY(-3px) scale(1.05)";
-                  (e.currentTarget as HTMLElement).style.boxShadow = "0 0 20px var(--accent-glow)";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.color = "var(--text-secondary)";
-                  (e.currentTarget as HTMLElement).style.borderColor = "var(--glass-border)";
-                  (e.currentTarget as HTMLElement).style.transform = "none";
-                  (e.currentTarget as HTMLElement).style.boxShadow = "none";
                 }}
               >
                 {social.icon}
@@ -433,7 +448,11 @@ export default function Hero() {
           cursor: "pointer",
           zIndex: 1,
         }}
-        onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
+        onClick={() => {
+          soundEffects.playClick();
+          document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+        }}
+        onMouseEnter={() => soundEffects.playHover(1.0)}
       >
         <span style={{ fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 600 }}>
           Explore Portfolio

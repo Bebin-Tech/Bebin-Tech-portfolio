@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { RotateCw, Sparkles, Code, Cpu } from "lucide-react";
 import { SiReact, SiNextdotjs, SiPython, SiTypescript } from "react-icons/si";
+import { soundEffects } from "@/lib/soundEffects";
 
 export default function HeroPhotoAvatar() {
   const [isSpinning, setIsSpinning] = useState(false);
@@ -41,6 +42,7 @@ export default function HeroPhotoAvatar() {
 
   const trigger360Spin = () => {
     if (isSpinning) return;
+    soundEffects.playSpin();
     setIsSpinning(true);
     setSpinCount((prev) => prev + 1);
     setTimeout(() => {
@@ -150,6 +152,7 @@ export default function HeroPhotoAvatar() {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.6, type: "spring", stiffness: 200 }}
         className="animate-float"
+        onMouseEnter={() => soundEffects.playHover(1.2)}
         style={{
           position: "absolute",
           top: "-15px",
@@ -179,6 +182,7 @@ export default function HeroPhotoAvatar() {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.8, type: "spring", stiffness: 200 }}
         className="animate-float-reverse"
+        onMouseEnter={() => soundEffects.playHover(1.0)}
         style={{
           position: "absolute",
           bottom: "15px",
@@ -208,6 +212,7 @@ export default function HeroPhotoAvatar() {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 1.0, type: "spring", stiffness: 200 }}
         className="animate-float-gentle"
+        onMouseEnter={() => soundEffects.playHover(1.3)}
         style={{
           position: "absolute",
           bottom: "-10px",
@@ -237,6 +242,7 @@ export default function HeroPhotoAvatar() {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 1.2, type: "spring", stiffness: 200 }}
         className="animate-float"
+        onMouseEnter={() => soundEffects.playHover(1.4)}
         style={{
           position: "absolute",
           top: "30px",

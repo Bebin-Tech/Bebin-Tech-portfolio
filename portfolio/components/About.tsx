@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { MapPin, Code2, Lightbulb, Heart, RotateCw, Sparkles, Trophy } from "lucide-react";
 import { personalInfo } from "@/data/portfolio";
+import { soundEffects } from "@/lib/soundEffects";
 
 const highlights = [
   { icon: <Code2 size={18} />, label: "Clean Code", desc: "Readable, maintainable, tested architecture" },
@@ -64,19 +65,20 @@ function AboutAvatar3D() {
 
   const triggerSpin = () => {
     if (isSpinning) return;
+    soundEffects.playSpin();
     setIsSpinning(true);
     setTimeout(() => setIsSpinning(false), 1000);
   };
 
   return (
     <div style={{ position: "relative" }} className="perspective-1000">
-      {/* Background glow */}
+      {/* Background ambient glow */}
       <div
         style={{
           position: "absolute",
-          inset: "-15px",
+          inset: "-10px",
           borderRadius: "2rem",
-          background: "radial-gradient(circle, rgba(6,182,212,0.18) 0%, rgba(129,140,248,0.1) 60%, transparent 80%)",
+          background: "radial-gradient(circle, rgba(6,182,212,0.25) 0%, rgba(129,140,248,0.15) 50%, transparent 75%)",
           filter: "blur(20px)",
           zIndex: 0,
         }}
@@ -100,45 +102,42 @@ function AboutAvatar3D() {
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         onClick={triggerSpin}
+        onMouseEnter={() => soundEffects.playHover(1.1)}
+        title="Click to spin 360°"
       >
         <div
           style={{
             position: "relative",
-            borderRadius: "1.5rem",
-            padding: "3px",
-            background: "linear-gradient(135deg, rgba(6,182,212,0.8), rgba(129,140,248,0.8), rgba(34,211,238,0.8))",
-            boxShadow: "0 15px 40px rgba(0,0,0,0.4), 0 0 25px rgba(6,182,212,0.2)",
-            aspectRatio: "1",
-            maxWidth: "340px",
+            width: "100%",
+            maxWidth: "320px",
+            height: "380px",
             margin: "0 auto",
+            borderRadius: "1.75rem",
+            padding: "3px",
+            background: "linear-gradient(135deg, rgba(6,182,212,0.9), rgba(129,140,248,0.9), rgba(34,211,238,0.9))",
+            boxShadow: "0 20px 45px rgba(0,0,0,0.5), 0 0 30px rgba(6,182,212,0.3)",
           }}
         >
           <div
             style={{
               position: "relative",
-              borderRadius: "calc(1.5rem - 3px)",
+              borderRadius: "calc(1.75rem - 3px)",
               overflow: "hidden",
               width: "100%",
               height: "100%",
-              background: "var(--bg-surface)",
+              background: "#0d131f",
             }}
           >
             <Image
               src="/images/bebin.jpg"
               alt="Bebin R — Full Stack Developer"
-              width={400}
-              height={400}
-              style={{ objectFit: "cover", objectPosition: "center 20%", width: "100%", height: "100%" }}
-            />
-            {/* Overlay accent */}
-            <div
+              fill
+              sizes="(max-width: 768px) 90vw, 320px"
+              priority
               style={{
-                position: "absolute",
-                bottom: 0,
-                left: 0,
-                right: 0,
-                background: "linear-gradient(to top, rgba(10,10,15,0.8) 0%, transparent 70%)",
-                padding: "1rem",
+                objectFit: "cover",
+                objectPosition: "center 15%",
+                display: "block",
               }}
             />
 
@@ -146,23 +145,56 @@ function AboutAvatar3D() {
             <div
               style={{
                 position: "absolute",
-                top: "10px",
-                right: "10px",
-                background: "rgba(10,10,15,0.7)",
-                backdropFilter: "blur(8px)",
+                top: "12px",
+                right: "12px",
+                background: "rgba(10,10,15,0.75)",
+                backdropFilter: "blur(10px)",
                 border: "1px solid rgba(6,182,212,0.4)",
                 borderRadius: "9999px",
-                padding: "0.25rem 0.6rem",
+                padding: "0.25rem 0.65rem",
                 display: "flex",
                 alignItems: "center",
-                gap: "0.3rem",
+                gap: "0.35rem",
                 color: "var(--accent-light)",
-                fontSize: "0.7rem",
+                fontSize: "0.72rem",
                 fontWeight: 600,
+                boxShadow: "0 4px 12px rgba(0,0,0,0.4)",
               }}
             >
-              <RotateCw size={11} className={isSpinning ? "animate-spin" : ""} />
+              <RotateCw size={12} className={isSpinning ? "animate-spin" : ""} />
               360°
+            </div>
+
+            {/* Bottom mini status badge */}
+            <div
+              style={{
+                position: "absolute",
+                bottom: "12px",
+                left: "12px",
+                background: "rgba(10,10,15,0.75)",
+                backdropFilter: "blur(10px)",
+                border: "1px solid rgba(34,197,94,0.4)",
+                borderRadius: "9999px",
+                padding: "0.25rem 0.65rem",
+                display: "flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                color: "#4ade80",
+                fontSize: "0.72rem",
+                fontWeight: 600,
+                boxShadow: "0 4px 12px rgba(0,0,0,0.4)",
+              }}
+            >
+              <span
+                style={{
+                  width: "6px",
+                  height: "6px",
+                  borderRadius: "50%",
+                  background: "#22c55e",
+                  boxShadow: "0 0 8px #22c55e",
+                }}
+              />
+              Available for work
             </div>
           </div>
         </div>
@@ -244,10 +276,11 @@ export default function About() {
                 { value: "15+", label: "Projects" },
                 { value: "10+", label: "Clients" },
                 { value: "5+", label: "Open Source" },
-              ].map((stat, idx) => (
+              ].map((stat) => (
                 <div
                   key={stat.label}
                   className="glass glow-card-interactive"
+                  onMouseEnter={() => soundEffects.playHover(1.15)}
                   style={{
                     borderRadius: "0.85rem",
                     padding: "1rem",
@@ -324,6 +357,7 @@ export default function About() {
                 <div
                   key={h.label}
                   className="glass glow-card-interactive"
+                  onMouseEnter={() => soundEffects.playHover(1.2)}
                   style={{
                     borderRadius: "0.85rem",
                     padding: "1.1rem 1.25rem",
@@ -355,6 +389,19 @@ export default function About() {
                 {techBadges.map((tech) => (
                   <span
                     key={tech}
+                    onMouseEnter={(e) => {
+                      soundEffects.playHover(1.25);
+                      (e.currentTarget as HTMLElement).style.background = "rgba(6,182,212,0.22)";
+                      (e.currentTarget as HTMLElement).style.borderColor = "var(--accent-light)";
+                      (e.currentTarget as HTMLElement).style.transform = "translateY(-2px) scale(1.04)";
+                      (e.currentTarget as HTMLElement).style.boxShadow = "0 0 15px rgba(6,182,212,0.3)";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLElement).style.background = "rgba(6,182,212,0.08)";
+                      (e.currentTarget as HTMLElement).style.borderColor = "rgba(6,182,212,0.25)";
+                      (e.currentTarget as HTMLElement).style.transform = "none";
+                      (e.currentTarget as HTMLElement).style.boxShadow = "none";
+                    }}
                     style={{
                       background: "rgba(6,182,212,0.08)",
                       border: "1px solid rgba(6,182,212,0.25)",
@@ -366,18 +413,6 @@ export default function About() {
                       fontFamily: "var(--font-mono)",
                       transition: "all 0.25s ease",
                       cursor: "default",
-                    }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLElement).style.background = "rgba(6,182,212,0.22)";
-                      (e.currentTarget as HTMLElement).style.borderColor = "var(--accent-light)";
-                      (e.currentTarget as HTMLElement).style.transform = "translateY(-2px) scale(1.04)";
-                      (e.currentTarget as HTMLElement).style.boxShadow = "0 0 15px rgba(6,182,212,0.3)";
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLElement).style.background = "rgba(6,182,212,0.08)";
-                      (e.currentTarget as HTMLElement).style.borderColor = "rgba(6,182,212,0.25)";
-                      (e.currentTarget as HTMLElement).style.transform = "none";
-                      (e.currentTarget as HTMLElement).style.boxShadow = "none";
                     }}
                   >
                     {tech}

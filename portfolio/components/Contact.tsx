@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { Mail, Send, CheckCircle, MapPin, Clock } from "lucide-react";
 import { FaGithub, FaInstagram } from "react-icons/fa6";
 import { personalInfo } from "@/data/portfolio";
+import { soundEffects } from "@/lib/soundEffects";
 
 function useInView(threshold = 0.1) {
   const ref = useRef<HTMLElement>(null);
@@ -54,12 +55,14 @@ export default function Contact() {
   } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
+    soundEffects.playClick();
     setSending(true);
     // Simulate sending
     await new Promise((r) => setTimeout(r, 1400));
     console.log("Form data:", data);
     setSending(false);
     setSubmitted(true);
+    soundEffects.playSuccess();
     reset();
     setTimeout(() => setSubmitted(false), 6000);
   };

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X, Sun, Moon, Download } from "lucide-react";
 import { personalInfo } from "@/data/portfolio";
+import { soundEffects } from "@/lib/soundEffects";
 
 const navLinks = [
   { href: "#about", label: "About" },
@@ -41,9 +42,15 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
   }, []);
 
   const handleNavClick = (href: string) => {
+    soundEffects.playClick();
     setMenuOpen(false);
     const el = document.querySelector(href);
     if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleToggleTheme = () => {
+    soundEffects.playToggle();
+    toggleTheme();
   };
 
   return (
@@ -56,9 +63,7 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
           right: 0,
           zIndex: 100,
           transition: "all 0.3s ease",
-          background: scrolled
-            ? "rgba(10, 10, 15, 0.85)"
-            : "transparent",
+          background: scrolled ? "rgba(10, 10, 15, 0.85)" : "transparent",
           backdropFilter: scrolled ? "blur(20px)" : "none",
           borderBottom: scrolled ? "1px solid var(--border)" : "none",
         }}
@@ -77,7 +82,12 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
           {/* Logo */}
           <a
             href="#"
-            onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+            onClick={(e) => {
+              e.preventDefault();
+              soundEffects.playClick();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            onMouseEnter={() => soundEffects.playHover(1.2)}
             style={{
               fontFamily: "var(--font-mono)",
               fontSize: "1.1rem",
@@ -100,14 +110,18 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "2rem",
+              gap: "1.75rem",
             }}
           >
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavClick(link.href);
+                }}
+                onMouseEnter={() => soundEffects.playHover(1)}
                 style={{
                   fontSize: "0.875rem",
                   fontWeight: 500,
@@ -116,11 +130,6 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
                   transition: "color 0.2s ease",
                   position: "relative",
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
-                onMouseLeave={(e) => {
-                  if (activeSection !== link.href.slice(1))
-                    e.currentTarget.style.color = "var(--text-secondary)";
-                }}
               >
                 {link.label}
               </a>
@@ -128,27 +137,20 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
 
             {/* Theme toggle */}
             <button
-              onClick={toggleTheme}
+              onClick={handleToggleTheme}
+              onMouseEnter={() => soundEffects.playHover(1.1)}
               aria-label="Toggle theme"
               style={{
                 background: "var(--glass-bg)",
                 border: "1px solid var(--glass-border)",
                 borderRadius: "0.5rem",
-                padding: "0.4rem",
+                padding: "0.45rem",
                 cursor: "pointer",
                 color: "var(--text-secondary)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 transition: "all 0.2s ease",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.color = "var(--accent)";
-                (e.currentTarget as HTMLElement).style.borderColor = "var(--accent)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.color = "var(--text-secondary)";
-                (e.currentTarget as HTMLElement).style.borderColor = "var(--glass-border)";
               }}
             >
               {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
@@ -158,6 +160,8 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
             <a
               href={personalInfo.resumeUrl}
               download
+              onClick={() => soundEffects.playClick()}
+              onMouseEnter={() => soundEffects.playHover(1.15)}
               className="btn-primary"
               style={{ fontSize: "0.8rem", padding: "0.5rem 1.25rem" }}
             >
@@ -167,9 +171,9 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
           </div>
 
           {/* Mobile controls */}
-          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }} className="mobile-controls">
+          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }} className="mobile-controls">
             <button
-              onClick={toggleTheme}
+              onClick={handleToggleTheme}
               aria-label="Toggle theme"
               style={{
                 background: "var(--glass-bg)",
@@ -185,7 +189,10 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
               {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
             </button>
             <button
-              onClick={() => setMenuOpen(!menuOpen)}
+              onClick={() => {
+                soundEffects.playClick();
+                setMenuOpen(!menuOpen);
+              }}
               aria-label="Toggle menu"
               style={{
                 background: "transparent",
@@ -220,21 +227,22 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
             paddingTop: "64px",
           }}
         >
-          {navLinks.map((link, i) => (
+          {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavClick(link.href);
+              }}
+              onMouseEnter={() => soundEffects.playHover(1)}
               style={{
                 fontSize: "1.75rem",
                 fontWeight: 700,
                 color: "var(--text-primary)",
                 textDecoration: "none",
                 transition: "color 0.2s ease",
-                animationDelay: `${i * 0.05}s`,
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
             >
               {link.label}
             </a>
@@ -243,7 +251,10 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
             href={personalInfo.resumeUrl}
             download
             className="btn-primary"
-            onClick={() => setMenuOpen(false)}
+            onClick={() => {
+              soundEffects.playClick();
+              setMenuOpen(false);
+            }}
             style={{ marginTop: "1rem" }}
           >
             <Download size={16} />

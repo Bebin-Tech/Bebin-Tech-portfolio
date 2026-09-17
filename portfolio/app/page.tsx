@@ -12,6 +12,7 @@ import GitHub from "@/components/GitHub";
 import Resume from "@/components/Resume";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import BackgroundCanvas from "@/components/BackgroundCanvas";
 
 export default function Home() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
@@ -38,11 +39,14 @@ export default function Home() {
 
   return (
     <main style={{ position: "relative", minHeight: "100vh" }}>
+      {/* Dynamic Starfield & Nebula Particle Background */}
+      <BackgroundCanvas />
+
       <Navbar theme={theme} toggleTheme={toggleTheme} />
       <Hero />
-      <Projects />
       <About />
       <Skills />
+      <Projects />
       <Experience />
       <Education />
       <GitHub />

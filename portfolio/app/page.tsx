@@ -15,12 +15,11 @@ import Footer from "@/components/Footer";
 import BackgroundCanvas from "@/components/BackgroundCanvas";
 
 export default function Home() {
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [theme, setTheme] = useState<"dark" | "light" | "aurora">("dark");
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      const saved = localStorage.getItem("portfolio-theme") as "dark" | "light" | null;
-      if (saved) setTheme(saved);
+      try { const saved = localStorage.getItem("portfolio-theme"); if (saved === "dark" || saved === "light" || saved === "aurora") setTheme(saved); } catch { /* Storage is optional. */ }
     }, 0);
 
     return () => clearTimeout(timeout);
@@ -28,13 +27,13 @@ export default function Home() {
 
   useEffect(() => {
     document.documentElement.classList.toggle("light", theme === "light");
+    document.documentElement.classList.toggle("aurora", theme === "aurora");
+    document.documentElement.style.colorScheme = theme === "light" ? "light" : "dark";
   }, [theme]);
 
-  const toggleTheme = () => {
-    const next = theme === "dark" ? "light" : "dark";
+  const changeTheme = (next: "dark" | "light" | "aurora") => {
     setTheme(next);
-    document.documentElement.classList.toggle("light", next === "light");
-    localStorage.setItem("portfolio-theme", next);
+    try { localStorage.setItem("portfolio-theme", next); } catch { /* Theme works without storage. */ }
   };
 
   return (
@@ -42,7 +41,7 @@ export default function Home() {
       {/* Dynamic Starfield & Nebula Particle Background */}
       <BackgroundCanvas />
 
-      <Navbar theme={theme} toggleTheme={toggleTheme} />
+      <Navbar theme={theme} changeTheme={changeTheme} />
       <Hero />
       <About />
       <Skills />

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Menu, X, Sun, Moon, Download } from "lucide-react";
+import { Menu, X, Download } from "lucide-react";
 import { personalInfo } from "@/data/portfolio";
 import { soundEffects } from "@/lib/soundEffects";
 
@@ -14,11 +14,11 @@ const navLinks = [
 ];
 
 interface NavbarProps {
-  theme: string;
-  toggleTheme: () => void;
+  theme: "dark" | "light" | "aurora";
+  changeTheme: (theme: "dark" | "light" | "aurora") => void;
 }
 
-export default function Navbar({ theme, toggleTheme }: NavbarProps) {
+export default function Navbar({ theme, changeTheme }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
@@ -48,10 +48,17 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleToggleTheme = () => {
-    soundEffects.playToggle();
-    toggleTheme();
-  };
+  const themeSelector = (
+    <select className="theme-selector" aria-label="Color theme" value={theme}
+      onChange={(event) => {
+        soundEffects.playToggle();
+        changeTheme(event.target.value as NavbarProps["theme"]);
+      }}>
+      <option value="light">White</option>
+      <option value="dark">Dark</option>
+      <option value="aurora">Aurora</option>
+    </select>
+  );
 
   return (
     <>
@@ -63,7 +70,7 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
           right: 0,
           zIndex: 100,
           transition: "all 0.3s ease",
-          background: scrolled ? "rgba(10, 10, 15, 0.85)" : "transparent",
+          background: scrolled ? "var(--nav-bg)" : "transparent",
           backdropFilter: scrolled ? "blur(20px)" : "none",
           borderBottom: scrolled ? "1px solid var(--border)" : "none",
         }}
@@ -136,25 +143,7 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
             ))}
 
             {/* Theme toggle */}
-            <button
-              onClick={handleToggleTheme}
-              onMouseEnter={() => soundEffects.playHover(1.1)}
-              aria-label="Toggle theme"
-              style={{
-                background: "var(--glass-bg)",
-                border: "1px solid var(--glass-border)",
-                borderRadius: "0.5rem",
-                padding: "0.45rem",
-                cursor: "pointer",
-                color: "var(--text-secondary)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                transition: "all 0.2s ease",
-              }}
-            >
-              {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
-            </button>
+            {themeSelector}
 
             {/* Resume button */}
             <a
@@ -172,22 +161,7 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
 
           {/* Mobile controls */}
           <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }} className="mobile-controls">
-            <button
-              onClick={handleToggleTheme}
-              aria-label="Toggle theme"
-              style={{
-                background: "var(--glass-bg)",
-                border: "1px solid var(--glass-border)",
-                borderRadius: "0.5rem",
-                padding: "0.4rem",
-                cursor: "pointer",
-                color: "var(--text-secondary)",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
-            </button>
+            {themeSelector}
             <button
               onClick={() => {
                 soundEffects.playClick();
@@ -217,7 +191,7 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
             position: "fixed",
             inset: 0,
             zIndex: 99,
-            background: "rgba(10,10,15,0.98)",
+            background: "var(--bg-primary)",
             backdropFilter: "blur(20px)",
             display: "flex",
             flexDirection: "column",

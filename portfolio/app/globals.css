@@ -363,3 +363,20 @@
 .contrib-3 { background: rgba(6, 182, 212, 0.65); }
 .contrib-4 { background: rgba(6, 182, 212, 0.9); }
 
+/* Three accessible, persistent color themes. */
+:root { --nav-bg:rgba(10,10,15,.92); }
+.light { --bg-primary:#ffffff; --bg-secondary:#f3f6fb; --bg-surface:#ffffff; --accent:#007b94; --accent-light:#007b94; --text-muted:#627084; --nav-bg:rgba(255,255,255,.94); }
+.aurora {
+  --bg-primary:#100c24; --bg-secondary:#18112f; --bg-surface:#241a3e;
+  --accent:#c4a2ff; --accent-light:#edbaff; --accent-glow:rgba(196,162,255,.22);
+  --text-primary:#faf5ff; --text-secondary:#c7badc; --text-muted:#a89bbb;
+  --border:rgba(210,177,255,.17); --glass-bg:rgba(181,136,255,.07);
+  --glass-border:rgba(210,177,255,.22); --nav-bg:rgba(16,12,36,.94);
+}
+.theme-selector { color:var(--text-primary); background:var(--bg-surface); border:1px solid var(--glass-border); border-radius:8px; padding:9px 8px; font:inherit; font-size:12px; cursor:pointer; min-height:38px; }
+.theme-selector:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+.aurora .gradient-text { background-image:linear-gradient(120deg,#f0b4ff,#b69bff,#70e5d1); }
+.aurora #hero > div:first-child { background:radial-gradient(ellipse at 10% 30%,rgba(177,81,255,.23),transparent 60%),radial-gradient(ellipse at 85% 70%,rgba(52,218,178,.15),transparent 55%),var(--bg-primary)!important; }
+.light .btn-primary { color:#fff; }
+.light #projects h3 { color:var(--text-primary); }
+@media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }

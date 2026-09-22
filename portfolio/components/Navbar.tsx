@@ -70,7 +70,7 @@ export default function Navbar({ theme, changeTheme }: NavbarProps) {
           right: 0,
           zIndex: 100,
           transition: "all 0.3s ease",
-          background: scrolled ? "var(--nav-bg)" : "transparent",
+          background: "var(--nav-bg)",
           backdropFilter: scrolled ? "blur(20px)" : "none",
           borderBottom: scrolled ? "1px solid var(--border)" : "none",
         }}

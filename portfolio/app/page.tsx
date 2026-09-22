@@ -12,7 +12,8 @@ import GitHub from "@/components/GitHub";
 import Resume from "@/components/Resume";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import BackgroundCanvas from "@/components/BackgroundCanvas";
+import CinematicExperience from "@/components/CinematicExperience";
+
 
 export default function Home() {
   const [theme, setTheme] = useState<"dark" | "light" | "aurora">("dark");
@@ -37,9 +38,9 @@ export default function Home() {
   };
 
   return (
-    <main style={{ position: "relative", minHeight: "100vh" }}>
-      {/* Dynamic Starfield & Nebula Particle Background */}
-      <BackgroundCanvas />
+    <CinematicExperience><main style={{ position: "relative", minHeight: "100vh" }}>
+
+
 
       <Navbar theme={theme} changeTheme={changeTheme} />
       <Hero />
@@ -52,6 +53,7 @@ export default function Home() {
       <Resume />
       <Contact />
       <Footer />
-    </main>
+    </main></CinematicExperience>
   );
 }
+

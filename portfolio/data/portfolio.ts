@@ -47,60 +47,53 @@ export const skills = {
 
 export const projects = [
   {
-    id: 1,
-    title: "KAHE Task Management System",
-    description:
-      "Developed a comprehensive task management platform for students and faculty to assign, track, and update tasks. Features role-based authentication for admins, faculty, and students with a real-time progress dashboard.",
-    image: "/images/project-tasks.jpg",
-    tech: ["React", "JavaScript", "Node.js", "MySQL", "Tailwind CSS"],
-    github: "https://github.com/Bebin-Tech/kahe-task-management",
-    live: "https://task-management.bebintech.dev",
-    featured: true,
+    "id": 1,
+    "title": "Campus Flow — Placement Management",
+    "description": "A placement platform for students, recruiters, and placement officers. Supports job applications, company approvals, interview scheduling, and application status tracking.",
+    "tech": [
+      "React",
+      "TypeScript",
+      "Flask",
+      "SQLite"
+    ],
+    "github": "https://github.com/Bebin-Tech/placement-app"
   },
   {
-    id: 2,
-    title: "KAHE Classroom Management System",
-    description:
-      "Built a modern system to manage classroom schedules, resources, and attendance records. Enabled faculty to track student attendance and performance efficiently through an intuitive, responsive interface.",
-    image: "/images/project-saas.jpg",
-    tech: ["React", "Python", "MySQL", "REST APIs", "Tailwind CSS"],
-    github: "https://github.com/Bebin-Tech/kahe-classroom-management",
-    live: "https://classroom.bebintech.dev",
-    featured: true,
+    "id": 2,
+    "title": "Smart Energy Management",
+    "description": "An energy monitoring dashboard for buildings and departments, with consumption tracking, reports, and system settings.",
+    "tech": [
+      "React",
+      "Flask",
+      "MySQL",
+      "Chart.js"
+    ],
+    "github": "https://github.com/Bebin-Tech/Smart-Energy-Management-System"
   },
   {
-    id: 3,
-    title: "End-to-End ML Pipeline Solution",
-    description:
-      "Automated Machine Learning pipeline covering data ingestion, feature engineering, missing-value imputation, outlier detection, hyperparameter tuning, and cross-validation performance evaluation.",
-    image: "/images/project-finance.jpg",
-    tech: ["Python", "Machine Learning", "Scikit-Learn", "Pandas", "MySQL"],
-    github: "https://github.com/Bebin-Tech/ml-pipeline-solution",
-    live: "https://ml-pipeline.bebintech.dev",
-    featured: false,
+    "id": 3,
+    "title": "Event Booking Management",
+    "description": "An event platform with searchable listings, booking management, a ticket wallet, and QR code integration. Separate admin and client workflows use role-based authentication.",
+    "tech": [
+      "React",
+      "Django REST Framework",
+      "JWT",
+      "Tailwind CSS"
+    ],
+    "github": "https://github.com/Bebin-Tech/Event-Booking-Management-system"
   },
   {
-    id: 4,
-    title: "Flutter Cross-Platform Mobile App",
-    description:
-      "Cross-platform mobile application built with Flutter and Dart featuring clean responsive UI layout, state management, REST API connectivity, and seamless mobile app user experience.",
-    image: "/images/project-chat.jpg",
-    tech: ["Flutter", "Dart", "REST APIs", "Mobile App Development"],
-    github: "https://github.com/Bebin-Tech/flutter-mobile-app",
-    live: "https://flutter-app.bebintech.dev",
-    featured: false,
-  },
-  {
-    id: 5,
-    title: "E-Commerce Platform Solution",
-    description:
-      "A full-featured e-commerce web application with product cataloging, shopping cart management, user authentication, and responsive user interface.",
-    image: "/images/project-ecommerce.jpg",
-    tech: ["React", "JavaScript", "Node.js", "MySQL", "CSS3"],
-    github: "https://github.com/Bebin-Tech/ecommerce-platform",
-    live: "https://shop.bebintech.dev",
-    featured: false,
-  },
+    "id": 4,
+    "title": "Student Performance Prediction",
+    "description": "A machine learning project exploring exam score prediction from study habits and academic factors. Includes generated data, linear regression training, evaluation, and an interactive Streamlit interface.",
+    "tech": [
+      "Python",
+      "Machine Learning",
+      "Linear Regression",
+      "Streamlit"
+    ],
+    "github": "https://github.com/Bebin-Tech/Student-performance-pridiction-python-project"
+  }
 ];
 
 export const experience = [

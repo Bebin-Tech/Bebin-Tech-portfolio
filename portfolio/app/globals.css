@@ -482,3 +482,15 @@ input,textarea{transition:border-color .3s,box-shadow .3s,background .3s}
 @media(prefers-reduced-motion:reduce){.cinematic-intro,.intro-replay,.reading-progress,.professional-hero::before{display:none}}
 .cinematic-intro { pointer-events:auto; }
 
+
+/* Lead with the two KAHE flagship projects. */
+.repository-featured { padding:36px; border-color:var(--glass-border); border-top:3px solid var(--accent); background:linear-gradient(145deg,var(--accent-glow),transparent 45%),var(--bg-surface); }
+.repository-featured h3 { font-size:clamp(30px,3.5vw,42px); line-height:1.15; margin-bottom:9px; letter-spacing:-1.2px; }
+.repository-featured .repository-label { color:var(--accent); font-weight:700; }
+.repository-subtitle { color:var(--text-secondary); font-size:14px; font-weight:600; margin-bottom:20px; }
+.repository-highlights { display:flex; flex-wrap:wrap; gap:9px 18px; list-style:none; padding:0; margin:22px 0 0; }
+.repository-highlights li { display:flex; align-items:center; gap:8px; color:var(--text-secondary); font-size:12px; }
+.repository-highlights li::before { content:''; width:5px; height:5px; flex-shrink:0; border-radius:50%; background:var(--accent); }
+.repository-supporting { grid-column:1/-1; }
+.repository-supporting .repository-description { max-width:760px; }
+@media(max-width:700px) { .repository-featured { padding:26px; } .repository-highlights { flex-direction:column; } }

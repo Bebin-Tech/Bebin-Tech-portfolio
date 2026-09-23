@@ -47,55 +47,36 @@ export const skills = {
 
 export const projects = [
   {
-    "id": 1,
-    "title": "Campus Flow — Placement Management",
-    "description": "A placement platform for students, recruiters, and placement officers. Supports job applications, company approvals, interview scheduling, and application status tracking.",
-    "tech": [
-      "React",
-      "TypeScript",
-      "Flask",
-      "SQLite"
-    ],
-    "github": "https://github.com/Bebin-Tech/placement-app"
+    id: 1,
+    title: "KAHE TMS",
+    subtitle: "Task Management System",
+    featured: true,
+    description: "An academic task platform connecting Admin, Dean, HOD, and Faculty. Coordinates department work from assignment and faculty submissions through multi-level review and final approval.",
+    highlights: ["Role-based dashboards", "Multi-level approvals", "Task tracking & reports"],
+    tech: ["React", "Django REST Framework", "JWT", "PostgreSQL"],
+    github: "https://github.com/Bebin-Tech/KAHE-TMS",
   },
   {
-    "id": 2,
-    "title": "Smart Energy Management",
-    "description": "An energy monitoring dashboard for buildings and departments, with consumption tracking, reports, and system settings.",
-    "tech": [
-      "React",
-      "Flask",
-      "MySQL",
-      "Chart.js"
-    ],
-    "github": "https://github.com/Bebin-Tech/Smart-Energy-Management-System"
+    id: 2,
+    title: "KAHE CMS",
+    subtitle: "Campus Management System",
+    featured: true,
+    description: "A campus resource platform for Karpagam Academy of Higher Education. Tracks classroom availability, manages room reservations, and coordinates class sessions with conflict detection and availability notifications.",
+    highlights: ["Classroom availability", "Room booking & queues", "Campus administration"],
+    tech: ["React", "Django REST Framework", "MySQL", "Tailwind CSS"],
+    github: "https://github.com/Bebin-Tech/KAHE-CMS.",
   },
   {
-    "id": 3,
-    "title": "Event Booking Management",
-    "description": "An event platform with searchable listings, booking management, a ticket wallet, and QR code integration. Separate admin and client workflows use role-based authentication.",
-    "tech": [
-      "React",
-      "Django REST Framework",
-      "JWT",
-      "Tailwind CSS"
-    ],
-    "github": "https://github.com/Bebin-Tech/Event-Booking-Management-system"
+    id: 3,
+    title: "SHK Connect",
+    subtitle: "Company Management System",
+    featured: false,
+    description: "A company workspace bringing team communication and operations together. Supports channels, direct messages, threaded conversations, file sharing, expense tracking, and support tickets.",
+    highlights: ["Real-time team messaging", "Files & threaded conversations", "Expenses & tickets"],
+    tech: ["React", "Flask", "SQLAlchemy", "Socket.IO"],
+    github: "https://github.com/Bebin-Tech/SHK-CONNECT",
   },
-  {
-    "id": 4,
-    "title": "Student Performance Prediction",
-    "description": "A machine learning project exploring exam score prediction from study habits and academic factors. Includes generated data, linear regression training, evaluation, and an interactive Streamlit interface.",
-    "tech": [
-      "Python",
-      "Machine Learning",
-      "Linear Regression",
-      "Streamlit"
-    ],
-    "github": "https://github.com/Bebin-Tech/Student-performance-pridiction-python-project"
-  }
 ];
-
 export const experience = [
   {
     id: 1,
@@ -197,3 +178,4 @@ export const githubData = {
     },
   ],
 };
+

@@ -494,3 +494,19 @@ input,textarea{transition:border-color .3s,box-shadow .3s,background .3s}
 .repository-supporting { grid-column:1/-1; }
 .repository-supporting .repository-description { max-width:760px; }
 @media(max-width:700px) { .repository-featured { padding:26px; } .repository-highlights { flex-direction:column; } }
+
+/* Space motion belongs to the portrait card background only. */
+.profile-space { position:relative; isolation:isolate; overflow:hidden; background:#0b1025; border-color:#a49bff45; box-shadow:0 24px 70px #0003,0 0 45px #8070ff18; }
+.profile-cosmos { position:absolute; inset:0; z-index:-1; overflow:hidden; pointer-events:none; border-radius:inherit; background:radial-gradient(ellipse at 15% 85%,#382064,transparent 65%),#090f22; }
+.profile-nebula { position:absolute; width:180%; aspect-ratio:1; left:-40%; top:5%; background:conic-gradient(from 30deg,transparent,#8c57dc55,transparent 35%,#2596bf55,transparent 65%,#6656e355,transparent); filter:blur(25px); animation:profile-space-spin 32s linear infinite; }
+.profile-starfield { position:absolute; width:180%; height:180%; left:-40%; top:-40%; animation:profile-space-spin 65s linear infinite reverse; }
+.profile-starfield i { position:absolute; border-radius:50%; background:#e5eaff; box-shadow:0 0 7px #c5caff; }
+.profile-orbit { position:absolute; width:150%; aspect-ratio:1; left:-25%; top:15%; border:1px solid #adbeff25; border-radius:50%; animation:profile-space-spin 22s linear infinite; }
+.profile-orbit::after { content:''; position:absolute; top:15%; left:14%; width:6px; height:6px; border-radius:50%; background:#b7dcff; box-shadow:0 0 16px 3px #8aafff90; }
+.profile-space .profile-caption strong { color:#f5f3ff; }
+.profile-space .profile-caption p,.profile-space .profile-specialties { color:#c7cbe1; }
+.profile-space .profile-specialties { border-color:#c4c9ff25; }
+.profile-space .profile-specialties svg { color:#c1b3ff; }
+.profile-space .profile-monogram { color:#e0d5ff; background:#aa87e630; }
+@keyframes profile-space-spin { to { transform:rotate(360deg); } }
+@media(prefers-reduced-motion:reduce) { .profile-nebula,.profile-starfield,.profile-orbit { animation:none; } }

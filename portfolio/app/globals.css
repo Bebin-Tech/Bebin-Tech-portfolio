@@ -556,3 +556,14 @@ input,textarea{transition:border-color .3s,box-shadow .3s,background .3s}
 @keyframes galaxy-meteor-pass { 0%,88% { opacity:0; transform:translate(0,0) rotate(-35deg); } 90% { opacity:.7; } 98%,100% { opacity:0; transform:translate(-450px,315px) rotate(-35deg); } }
 @media(max-width:700px) { .galaxy-spiral { width:110vw; height:110vw; top:0; right:-40vw; opacity:.45; } .galaxy-planet { bottom:8%; right:-12%; } .galaxy-meteor { display:none; } }
 @media(prefers-reduced-motion:reduce) { .galaxy-spiral-arms,.galaxy-stars i:nth-child(9n),.galaxy-meteor { animation:none; } }
+
+.certificate-gallery-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; }
+.certificate-gallery-card { overflow:hidden; border:1px solid var(--border); border-radius:16px; background:var(--bg-surface); display:flex; flex-direction:column; }
+.certificate-preview { display:block; position:relative; aspect-ratio:1.42; background:#f2f3f5; border-bottom:1px solid var(--border); }
+.certificate-details { padding:22px; display:flex; flex-direction:column; flex:1; align-items:flex-start; }
+.certificate-details h4 { font-size:16px; font-weight:650; line-height:1.5; margin-bottom:9px; }
+.certificate-details p { color:var(--text-secondary); font-size:12px; line-height:1.7; }
+.certificate-details .certificate-date { color:var(--text-muted); margin:5px 0 20px; }
+.certificate-details a { margin-top:auto; color:var(--accent); font-size:13px; font-weight:600; }
+@media(max-width:1100px) { .certificate-gallery-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:700px) { .certificate-gallery-grid { grid-template-columns:1fr; } }

@@ -567,3 +567,43 @@ input,textarea{transition:border-color .3s,box-shadow .3s,background .3s}
 .certificate-details a { margin-top:auto; color:var(--accent); font-size:13px; font-weight:600; }
 @media(max-width:1100px) { .certificate-gallery-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media(max-width:700px) { .certificate-gallery-grid { grid-template-columns:1fr; } }
+
+.theme-picker { position:relative; }
+.theme-picker-trigger { display:flex; align-items:center; gap:9px; min-height:42px; padding:9px 13px; border:1px solid var(--glass-border); border-radius:13px; background:var(--glass-bg); color:var(--text-primary); font-size:12px; cursor:pointer; transition:background .2s,border-color .2s; }
+.theme-picker-trigger>svg:first-child { color:var(--accent-light); }
+.theme-picker-trigger:hover,.theme-picker-trigger[aria-expanded=true] { border-color:var(--accent); background:var(--accent-glow); }
+.theme-picker-trigger>svg:last-child { transition:transform .2s; color:var(--text-muted); }
+.theme-chevron-open { transform:rotate(180deg); }
+.theme-picker-panel { position:absolute; right:0; top:calc(100% + 12px); width:250px; max-width:calc(100vw - 48px); padding:10px; border:1px solid var(--glass-border); border-radius:18px; background:var(--bg-surface); box-shadow:0 20px 60px #0005,0 0 25px var(--accent-glow); animation:theme-panel-in .18s ease-out; }
+.theme-picker-heading { color:var(--text-muted); font-size:9px; letter-spacing:1.8px; font-weight:700; padding:6px 10px 12px; }
+.theme-picker-option { display:flex; width:100%; gap:12px; align-items:center; text-align:left; padding:10px; border:1px solid transparent; border-radius:12px; background:transparent; color:var(--text-primary); cursor:pointer; min-height:64px; transition:background .2s,border-color .2s; }
+.theme-picker-option+.theme-picker-option { margin-top:4px; }
+.theme-picker-option:hover { background:var(--glass-bg); }
+.theme-picker-option.is-selected { background:var(--accent-glow); border-color:var(--glass-border); }
+.theme-swatch { width:38px; height:38px; display:grid; place-items:center; border-radius:11px; flex-shrink:0; border:1px solid #ffffff25; }
+.theme-swatch-light { background:linear-gradient(135deg,#fff,#e5edf9); color:#626c83; border-color:#cbd5e1; }
+.theme-swatch-dark { background:linear-gradient(135deg,#253348,#090e1c); color:#c4d5ef; }
+.theme-swatch-aurora { background:linear-gradient(135deg,#6941a5,#253252 65%,#247c80); color:#f1d9ff; }
+.theme-option-copy { display:flex; flex-direction:column; gap:3px; flex:1; }
+.theme-option-copy strong { font-size:13px; font-weight:600; }
+.theme-option-copy small { font-size:10px; color:var(--text-secondary); }
+.theme-check { color:var(--accent-light); }
+@keyframes theme-panel-in { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+@media(prefers-reduced-motion:reduce) { .theme-picker-panel { animation:none; } }
+
+/* Rounded navigation inspired by the pill-tab reference. */
+.desktop-nav { gap:18px!important; }
+.nav-pill-bar { display:flex; align-items:center; gap:4px; padding:5px; border:1px solid var(--glass-border); border-radius:999px; background:var(--glass-bg); box-shadow:inset 0 1px 0 #ffffff06; }
+.nav-pill-link { display:flex; align-items:center; justify-content:center; min-height:38px; padding:9px 16px; border-radius:999px; white-space:nowrap; font-size:13px!important; color:var(--text-secondary); transition:background .25s ease,color .25s ease,box-shadow .25s ease!important; }
+.nav-pill-link:hover { background:var(--glass-bg); color:var(--text-primary)!important; }
+.nav-pill-link.is-active { background:var(--accent-glow); color:var(--accent-light)!important; box-shadow:inset 0 0 0 1px var(--glass-border); }
+.light .nav-pill-bar { background:#edf6fc; border-color:#d1e5f2; }
+.light .nav-pill-link { color:#24455e!important; }
+.light .nav-pill-link.is-active { background:#d6eaf6; color:#075581!important; box-shadow:none; }
+.aurora .nav-pill-bar { background:#c4a2ff0b; border-color:#c4a2ff30; }
+.aurora .nav-pill-link.is-active { background:#c4a2ff26; color:#eadbff!important; }
+@media(min-width:769px) and (max-width:1050px) { .desktop-nav { gap:10px!important; } .nav-pill-link { padding:9px 10px; font-size:12px!important; } }
+
+.footer-layout { grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); }
+.footer-socials { grid-column:2; }
+@media(max-width:600px) { .footer-layout { grid-template-columns:1fr; text-align:center; } .footer-socials { grid-column:1; } }

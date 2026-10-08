@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Menu, X, Download } from "lucide-react";
 import { personalInfo } from "@/data/portfolio";
 import { soundEffects } from "@/lib/soundEffects";
+import ThemePicker from "@/components/ThemePicker";
 
 const navLinks = [
   { href: "#about", label: "About" },
@@ -49,15 +50,11 @@ export default function Navbar({ theme, changeTheme }: NavbarProps) {
   };
 
   const themeSelector = (
-    <select className="theme-selector" aria-label="Color theme" value={theme}
-      onChange={(event) => {
+    <ThemePicker theme={theme}
+      onChange={(next) => {
         soundEffects.playToggle();
-        changeTheme(event.target.value as NavbarProps["theme"]);
-      }}>
-      <option value="light">White</option>
-      <option value="dark">Dark</option>
-      <option value="aurora">Aurora</option>
-    </select>
+        changeTheme(next);
+      }} />
   );
 
   return (
@@ -120,9 +117,12 @@ export default function Navbar({ theme, changeTheme }: NavbarProps) {
               gap: "1.75rem",
             }}
           >
+            <div className="nav-pill-bar" role="group" aria-label="Portfolio sections">
             {navLinks.map((link) => (
               <a
                 key={link.href}
+                className={`nav-pill-link ${activeSection === link.href.slice(1) ? "is-active" : ""}`}
+                aria-current={activeSection === link.href.slice(1) ? "location" : undefined}
                 href={link.href}
                 onClick={(e) => {
                   e.preventDefault();
@@ -141,6 +141,7 @@ export default function Navbar({ theme, changeTheme }: NavbarProps) {
                 {link.label}
               </a>
             ))}
+            </div>
 
             {/* Theme toggle */}
             {themeSelector}

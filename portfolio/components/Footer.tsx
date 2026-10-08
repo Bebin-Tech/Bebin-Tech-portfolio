@@ -16,13 +16,12 @@ export default function Footer() {
       }}
     >
       <div
+        className="footer-layout"
         style={{
           maxWidth: "1280px",
           margin: "0 auto",
-          display: "flex",
-          justifyContent: "space-between",
+          display: "grid",
           alignItems: "center",
-          flexWrap: "wrap",
           gap: "1.5rem",
         }}
       >
@@ -50,8 +49,8 @@ export default function Footer() {
 
         </div>
 
-        {/* Right */}
-        <div style={{ display: "flex", gap: "0.75rem" }}>
+        {/* Centered independently of the logo width. */}
+        <div className="footer-socials" style={{ display: "flex", gap: "0.75rem", justifyContent: "center" }}>
           {[
             { href: personalInfo.github, icon: <FaGithub size={17} />, label: "GitHub" },
             { href: personalInfo.instagram, icon: <FaInstagram size={17} />, label: "Instagram" },

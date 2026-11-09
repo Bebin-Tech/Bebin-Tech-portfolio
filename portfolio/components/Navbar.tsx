@@ -143,9 +143,6 @@ export default function Navbar({ theme, changeTheme }: NavbarProps) {
             ))}
             </div>
 
-            {/* Theme toggle */}
-            {themeSelector}
-
             {/* Resume button */}
             <a
               href={personalInfo.resumeUrl}
@@ -161,13 +158,14 @@ export default function Navbar({ theme, changeTheme }: NavbarProps) {
           </div>
 
           {/* Mobile controls */}
-          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }} className="mobile-controls">
+          <div style={{ alignItems: "center", gap: "0.6rem" }} className="navbar-controls">
             {themeSelector}
             <button
               onClick={() => {
                 soundEffects.playClick();
                 setMenuOpen(!menuOpen);
               }}
+              className="mobile-menu-toggle"
               aria-label="Toggle menu"
               style={{
                 background: "transparent",
@@ -241,10 +239,10 @@ export default function Navbar({ theme, changeTheme }: NavbarProps) {
       <style>{`
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
-          .mobile-controls { display: flex !important; }
+          .mobile-menu-toggle { display: flex !important; }
         }
         @media (min-width: 769px) {
-          .mobile-controls { display: none !important; }
+          .mobile-menu-toggle { display: none !important; }
         }
       `}</style>
     </>

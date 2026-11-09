@@ -3,21 +3,17 @@
 import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { MapPin, Code2, Lightbulb, Heart, RotateCw, Sparkles, Trophy } from "lucide-react";
+import { MapPin, Code2, Lightbulb, Heart, RotateCw } from "lucide-react";
 import { personalInfo } from "@/data/portfolio";
 import { soundEffects } from "@/lib/soundEffects";
 
 const highlights = [
-  { icon: <Code2 size={18} />, label: "Clean Code", desc: "Readable, maintainable, tested architecture" },
-  { icon: <Lightbulb size={18} />, label: "Problem Solver", desc: "Analytical, creative, system-level thinker" },
-  { icon: <Heart size={18} />, label: "Detail-Oriented", desc: "Pixel perfection and smooth interactions" },
+  { icon: <Code2 size={18} />, label: "Clean Code", desc: "Readable components and clear structure" },
+  { icon: <Lightbulb size={18} />, label: "Problem Solver", desc: "Breaking problems into smaller steps" },
+  { icon: <Heart size={18} />, label: "Detail-Oriented", desc: "Attention to layout and usability" },
 ];
 
-const techBadges = [
-  "React", "Next.js", "TypeScript", "Python", "Node.js",
-  "PostgreSQL", "MongoDB", "Docker", "Tailwind CSS",
-  "GraphQL", "FastAPI", "Machine Learning"
-];
+const techBadges = ["React", "Python", "Django", "Flask", "PostgreSQL", "MySQL", "Tailwind CSS", "Machine Learning"];
 
 function useInView(threshold = 0.15) {
   const ref = useRef<HTMLElement>(null);
@@ -194,7 +190,7 @@ function AboutAvatar3D() {
                   boxShadow: "0 0 8px #22c55e",
                 }}
               />
-              Available for work
+              AI & Data Science student
             </div>
           </div>
         </div>
@@ -272,10 +268,10 @@ export default function About() {
               }}
             >
               {[
-                { value: "2+", label: "Years Exp." },
-                { value: "15+", label: "Projects" },
-                { value: "10+", label: "Clients" },
-                { value: "5+", label: "Open Source" },
+                { value: "3", label: "Full-stack projects" },
+                { value: "1", label: "ML learning project" },
+                { value: "2025", label: "Degree started" },
+                { value: "May 2026", label: "ML internship started" },
               ].map((stat) => (
                 <div
                   key={stat.label}

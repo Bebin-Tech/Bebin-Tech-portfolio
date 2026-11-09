@@ -4,10 +4,10 @@ export const personalInfo = {
   name: "Bebin R",
   firstName: "Bebin",
   title: "AI & Data Science Student | Full Stack Developer | ML Enthusiast",
-  headline: "I build end-to-end Machine Learning pipelines & scalable web applications.",
-  bio: "I am an Artificial Intelligence & Data Science student and Full Stack Developer based in Coimbatore, Tamil Nadu. With practical experience as a Machine Learning Intern at Techvolt Software, I specialize in building data preprocessing workflows, model training pipelines, and modern web applications.",
+  headline: "I build web applications and explore machine learning with Python.",
+  bio: "I am an Artificial Intelligence & Data Science student and Full Stack Developer based in Coimbatore, Tamil Nadu. With practical experience as a Machine Learning Intern at Techvolt Software, I work on data preprocessing, model training, and web applications.",
   bio2: "Seeking roles in AI, Data Science, Machine Learning, and Full Stack Development to apply technical expertise, contribute to innovative projects, and grow as a technology professional.",
-  philosophy: "I believe practical, project-based engineering bridges theoretical AI concepts with production-ready solutions.",
+  philosophy: "I learn by building projects, testing assumptions, and documenting what works.",
   email: "bbebinr@gmail.com",
   phone: "+91 88073 36368",
   github: "https://github.com/Bebin-Tech",
@@ -23,14 +23,12 @@ export const skills = {
     { name: "CSS3", icon: "SiCss", color: "#1572B6" },
     { name: "JavaScript", icon: "SiJavascript", color: "#F7DF1E" },
     { name: "React", icon: "SiReact", color: "#61DAFB" },
-    { name: "Dart", icon: "SiDart", color: "#0175C2" },
-    { name: "Flutter", icon: "SiFlutter", color: "#02569B" },
   ],
   backend: [
+    { name: "Django", icon: "SiDjango", color: "#44b78b" },
+    { name: "Flask", icon: "SiFlask", color: "#9ca3af" },
     { name: "Python", icon: "SiPython", color: "#3776AB" },
     { name: "Machine Learning", icon: "SiScikitlearn", color: "#F7931E" },
-    { name: "Artificial Intelligence", icon: "SiOpenai", color: "#10A37F" },
-    { name: "Node.js", icon: "SiNodedotjs", color: "#339933" },
     { name: "REST APIs", icon: "SiPostman", color: "#FF6C37" },
   ],
   database: [
@@ -45,20 +43,24 @@ export const skills = {
   ],
 };
 
-export const projects = [
+export type Project = { id:number; title:string; subtitle:string; featured:boolean; description:string; highlights:string[]; tech:string[]; github:string; workflow?:string[]; image?:string; imageAlt?:string; demo?:string; writeup?:string };
+export const projects: Project[] = [
   {
     id: 1,
     title: "KAHE TMS",
+    workflow: ["Dean assigns", "HOD delegates", "Faculty submits", "Review & approval"],
+    writeup: "/writing/kahe-task-workflow",
     subtitle: "Task Management System",
     featured: true,
     description: "An academic task platform connecting Admin, Dean, HOD, and Faculty. Coordinates department work from assignment and faculty submissions through multi-level review and final approval.",
-    highlights: ["Role-based dashboards", "Multi-level approvals", "Task tracking & reports"],
+    highlights: ["4 user roles", "Multi-level approvals", "Task tracking & reports"],
     tech: ["React", "Django REST Framework", "JWT", "PostgreSQL"],
     github: "https://github.com/Bebin-Tech/KAHE-TMS",
   },
   {
     id: 2,
     title: "KAHE CMS",
+    workflow: ["Check availability", "Reserve room", "Start session", "Release room"],
     subtitle: "Campus Management System",
     featured: true,
     description: "A campus resource platform for Karpagam Academy of Higher Education. Tracks classroom availability, manages room reservations, and coordinates class sessions with conflict detection and availability notifications.",
@@ -69,6 +71,7 @@ export const projects = [
   {
     id: 3,
     title: "SHK Connect",
+    workflow: ["Team channels", "Messages & files", "Threads", "Read receipts"],
     subtitle: "Company Management System",
     featured: false,
     description: "A company workspace bringing team communication and operations together. Supports channels, direct messages, threaded conversations, file sharing, expense tracking, and support tickets.",
@@ -76,38 +79,20 @@ export const projects = [
     tech: ["React", "Flask", "SQLAlchemy", "Socket.IO"],
     github: "https://github.com/Bebin-Tech/SHK-CONNECT",
   },
-];
-export const experience = [
   {
-    id: 1,
-    company: "Techvolt Software, Coimbatore",
-    role: "Machine Learning Intern",
-    type: "Internship",
-    duration: "May 2026 – Present",
-    location: "Coimbatore, Tamil Nadu",
-    description: [
-      "Designed and executed end-to-end Machine Learning pipelines in Python, covering data ingestion, feature engineering, model training, and performance evaluation.",
-      "Applied supervised learning algorithms to real-world datasets; improved model accuracy through iterative hyperparameter tuning and cross-validation strategies.",
-      "Performed comprehensive data preprocessing workflows including missing-value imputation, outlier detection, normalisation, and categorical encoding on structured datasets.",
-      "Delivered practical, project-based ML solutions that bridged theoretical concepts with production-ready implementation, receiving positive feedback from mentors.",
-    ],
-    achievements: ["End-to-End ML Pipelines", "Hyperparameter Optimization", "Production Ready ML"],
-  },
-  {
-    id: 2,
-    company: "Karpagam Academy of Higher Education",
-    role: "AI & Data Science Student",
-    type: "Academic",
-    duration: "2025 – Present",
-    location: "Coimbatore, Tamil Nadu",
-    description: [
-      "Pursuing a Bachelor of Science in Artificial Intelligence & Data Science while building hands-on ML and full-stack web and mobile projects.",
-      "Developed KAHE Task Management System with role-based authentication and real-time task progress monitoring.",
-      "Engineered KAHE Classroom Management System for efficient classroom scheduling and attendance tracking.",
-    ],
-    achievements: ["B.Sc AI & DS", "Full Stack & ML Developer", "Academic Excellence"],
-  },
+ id:4, title:"Student Performance Prediction", subtitle:"Machine learning · learning project", featured:false,
+ description:"A linear regression experiment on generated student data using four inputs: study hours, attendance, previous marks, and sleep. Includes a dataset, exploratory plots, an 80/20 train/test split, evaluation code, and a local Streamlit interface. Synthetic-data results are not evidence of performance on real students.",
+ highlights:["4 input features", "80/20 train/test split", "MAE, RMSE & R² evaluation"],
+ tech:["Python", "pandas", "scikit-learn", "Streamlit"],
+ github:"https://github.com/Bebin-Tech/Student-performance-pridiction-python-project",
+ image:"/images/projects/student-eda.png", imageAlt:"Repository exploratory plot of study hours and final marks in generated student data",
+ },
 ];
+export const experience = [{
+ id: 1, company: "Techvolt Software, Coimbatore", role: "Machine Learning Intern", type: "Internship", duration: "May 2026 – Present", location: "Coimbatore, Tamil Nadu",
+ description: ["Prepare structured data in Python, including handling missing values, encoding categories, and normalizing features.", "Train and evaluate supervised learning models as part of internship projects.", "Explore feature engineering and hyperparameter tuning when comparing model performance."],
+ achievements: ["Python", "Data preprocessing", "Model evaluation"],
+}];
 
 export const education = {
   degree: {
@@ -115,67 +100,6 @@ export const education = {
     institution: "Karpagam Academy of Higher Education",
     location: "Coimbatore, Tamil Nadu, India",
     duration: "2025 – Present (Expected 2028)",
-    description: "Specializing in Artificial Intelligence, Machine Learning pipelines, Data Science methodologies, Full Stack Web Development, and Mobile Application Development.",
-    gpa: "First Class",
+    description: "Studying AI and Data Science. Academic projects include KAHE TMS for task approvals and KAHE CMS for classroom availability, room booking, and conflict detection.",
   },
-  certifications: [
-    {
-      title: "Machine Learning Internship Certificate",
-      issuer: "Techvolt Software, Coimbatore",
-      date: "2026",
-      color: "#06b6d4",
-    },
-    {
-      title: "Full Stack & Mobile App Development",
-      issuer: "KAHE / Self-Driven",
-      date: "2025",
-      color: "#3b82f6",
-    },
-    {
-      title: "Python Data Science & Supervised Learning",
-      issuer: "Certification Course",
-      date: "2025",
-      color: "#8b5cf6",
-    },
-  ],
 };
-
-export const githubData = {
-  username: "Bebin-Tech",
-  stats: {
-    repos: 14,
-    stars: 45,
-    followers: 28,
-    contributions: 420,
-  },
-  repos: [
-    {
-      name: "kahe-task-management",
-      description: "Task management platform for students and faculty with role-based authentication",
-      language: "JavaScript",
-      languageColor: "#F7DF1E",
-      stars: 18,
-      forks: 5,
-      url: "https://github.com/Bebin-Tech/kahe-task-management",
-    },
-    {
-      name: "kahe-classroom-management",
-      description: "Classroom scheduling and attendance management system for faculty",
-      language: "Python",
-      languageColor: "#3776AB",
-      stars: 14,
-      forks: 4,
-      url: "https://github.com/Bebin-Tech/kahe-classroom-management",
-    },
-    {
-      name: "ml-pipeline-solution",
-      description: "End-to-end Machine Learning data ingestion and model training pipeline",
-      language: "Python",
-      languageColor: "#3776AB",
-      stars: 12,
-      forks: 3,
-      url: "https://github.com/Bebin-Tech/ml-pipeline-solution",
-    },
-  ],
-};
-

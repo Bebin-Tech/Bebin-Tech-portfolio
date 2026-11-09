@@ -94,7 +94,7 @@ export default function CinematicExperience({ children }: { children: ReactNode 
   return <MotionConfig reducedMotion="user">
     <motion.div className="reading-progress" style={{ scaleX: progress }} aria-hidden="true" />
     <div inert={intro}>{children}
-    <button className="intro-replay" onClick={start} aria-label="Replay cinematic intro"><Play size={13} /> Replay intro</button></div>
+    <button className="intro-replay" onClick={start} aria-label="Replay intro"><Play size={13} /> Replay intro</button></div>
     {intro && <div className="cinematic-intro" key={sequence}>
       <div className="celestial-scene" aria-hidden="true">
         <div className="celestial-aura" /><div className="celestial-ring" />

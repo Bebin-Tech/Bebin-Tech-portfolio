@@ -3,16 +3,18 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  SiHtml5, SiCss, SiJavascript, SiTypescript, SiReact,
+  SiDjango, SiFlask, SiHtml5, SiCss, SiJavascript, SiTypescript, SiReact,
   SiNextdotjs, SiTailwindcss, SiPython, SiNodedotjs,
   SiExpress, SiPostman, SiMongodb, SiPostgresql, SiMysql,
   SiGit, SiGithub, SiDocker, SiVscodium, SiDart, SiFlutter, SiScikitlearn
 } from "react-icons/si";
-import { Cpu, Sparkles, Layers } from "lucide-react";
+import { Cpu } from "lucide-react";
 import { skills } from "@/data/portfolio";
 import { soundEffects } from "@/lib/soundEffects";
 
 const iconMap: Record<string, React.ReactElement> = {
+  SiDjango: <SiDjango />,
+  SiFlask: <SiFlask />,
   SiHtml5: <SiHtml5 />,
   SiCss: <SiCss />,
   SiJavascript: <SiJavascript />,
@@ -39,10 +41,10 @@ const iconMap: Record<string, React.ReactElement> = {
 
 const categories = [
   { id: "all", title: "All Skills" },
-  { id: "frontend", title: "Frontend & Mobile", items: skills.frontend },
+  { id: "frontend", title: "Frontend", items: skills.frontend },
   { id: "backend", title: "Backend & ML", items: skills.backend },
   { id: "database", title: "Database", items: skills.database },
-  { id: "tools", title: "Tools & DevOps", items: skills.tools },
+  { id: "tools", title: "Tools", items: skills.tools },
 ];
 
 function useInView(threshold = 0.1) {
@@ -104,7 +106,7 @@ function SkillCard({ name, icon, color }: { name: string; icon: string; color: s
         />
       )}
 
-      <span
+      <span aria-hidden="true"
         style={{
           fontSize: "2.2rem",
           color: hovered ? color : "var(--text-secondary)",
@@ -173,7 +175,7 @@ export default function Skills() {
           <p className="section-label" style={{ justifyContent: "center" }}>Technical Proficiency</p>
           <h2 className="section-title" style={{ textAlign: "center" }}>Skills & Tech Stack</h2>
           <p className="section-subtitle" style={{ textAlign: "center", margin: "0 auto" }}>
-            A battle-tested arsenal spanning Machine Learning, High-Performance Full-Stack Web, Modern Mobile Apps, and Scalable Cloud Architectures.
+            Technologies used in my web projects, Python experiments, and development workflow.
           </p>
         </div>
 

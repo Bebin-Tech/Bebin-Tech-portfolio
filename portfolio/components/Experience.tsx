@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { Briefcase, MapPin, Award, ChevronRight, Sparkles } from "lucide-react";
+import { Briefcase, MapPin, Award, ChevronRight } from "lucide-react";
 import { experience } from "@/data/portfolio";
 
 function useInView(threshold = 0.1) {
@@ -41,7 +41,7 @@ export default function Experience() {
           <p className="section-label">Professional Trajectory</p>
           <h2 className="section-title">Work Experience</h2>
           <p className="section-subtitle">
-            Hands-on engineering roles crafting production-ready platforms, full-stack architectures, and AI systems.
+            Practical experience with Python, data preparation, and supervised learning.
           </p>
         </div>
 

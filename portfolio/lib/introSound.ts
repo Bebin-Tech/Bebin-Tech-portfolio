@@ -1,6 +1,5 @@
-/** Original short ambient cue; no downloaded audio or external requests. */
-export function createIntroSound() {
-  const context = new AudioContext();
+/** Build the identical cue only when the browser can actually play it. */
+function initializeSound(context: AudioContext) {
   const master = context.createGain();
   const compressor = context.createDynamicsCompressor();
   compressor.threshold.value = -18;
@@ -86,6 +85,12 @@ export function createIntroSound() {
   airGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.9);
   air.connect(filter).connect(airGain).connect(reverb);
   air.start(now);
+  return meter;
+}
+
+export function createIntroSound() {
+  const context = new AudioContext();
+  let meter: AnalyserNode | null = null;
   let cleanup: ReturnType<typeof setTimeout> | undefined;
   return {
         resume: async () => {
@@ -93,12 +98,13 @@ export function createIntroSound() {
         if (context.state === 'closed') return false;
         await context.resume();
         if (context.state !== 'running') return false;
+        if (!meter) meter = initializeSound(context);
         if (!cleanup) {
           cleanup = setTimeout(() => { void context.close().catch(() => {}); }, 3900);
           if (process.env.NODE_ENV === 'development') {
             setTimeout(() => {
-              const samples = new Float32Array(meter.fftSize);
-              meter.getFloatTimeDomainData(samples);
+              const samples = new Float32Array(meter!.fftSize);
+              meter!.getFloatTimeDomainData(samples);
               console.info('[intro-audio] playback', JSON.stringify({ state: context.state, time: context.currentTime, peak: Math.max(...samples.map(Math.abs)) }));
             }, 1000);
           }

@@ -129,7 +129,6 @@ function AboutAvatar3D() {
               alt="Bebin R — Full Stack Developer"
               fill
               sizes="(max-width: 768px) 90vw, 320px"
-              priority
               style={{
                 objectFit: "cover",
                 objectPosition: "center 15%",

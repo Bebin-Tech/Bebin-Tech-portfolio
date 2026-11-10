@@ -1,7 +1,4 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import Navbar from "@/components/Navbar";
+import ThemeNavigation from "@/components/ThemeNavigation";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Skills from "@/components/Skills";
@@ -17,34 +14,13 @@ import GalaxyBackground from "@/components/GalaxyBackground";
 
 
 export default function Home() {
-  const [theme, setTheme] = useState<"dark" | "light" | "aurora">("dark");
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      try { const saved = localStorage.getItem("portfolio-theme"); if (saved === "dark" || saved === "light" || saved === "aurora") setTheme(saved); } catch { /* Storage is optional. */ }
-    }, 0);
-
-    return () => clearTimeout(timeout);
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.classList.toggle("light", theme === "light");
-    document.documentElement.classList.toggle("aurora", theme === "aurora");
-    document.documentElement.style.colorScheme = theme === "light" ? "light" : "dark";
-  }, [theme]);
-
-  const changeTheme = (next: "dark" | "light" | "aurora") => {
-    setTheme(next);
-    try { localStorage.setItem("portfolio-theme", next); } catch { /* Theme works without storage. */ }
-  };
-
   return (
     <CinematicExperience><main className="galaxy-portfolio" style={{ position: "relative", minHeight: "100vh" }}>
       <GalaxyBackground />
 
 
 
-      <Navbar theme={theme} changeTheme={changeTheme} />
+      <ThemeNavigation />
       <Hero />
       <About />
       <Skills />

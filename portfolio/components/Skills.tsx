@@ -3,10 +3,9 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  SiDjango, SiFlask, SiHtml5, SiCss, SiJavascript, SiTypescript, SiReact,
-  SiNextdotjs, SiTailwindcss, SiPython, SiNodedotjs,
-  SiExpress, SiPostman, SiMongodb, SiPostgresql, SiMysql,
-  SiGit, SiGithub, SiDocker, SiVscodium, SiDart, SiFlutter, SiScikitlearn
+  SiDjango, SiFlask, SiHtml5, SiCss, SiJavascript, SiReact,
+  SiPython, SiPostgresql, SiMysql,
+  SiGit, SiGithub, SiDocker, SiVscodium, SiScikitlearn
 } from "react-icons/si";
 import { Cpu } from "lucide-react";
 import { skills } from "@/data/portfolio";
@@ -18,23 +17,14 @@ const iconMap: Record<string, React.ReactElement> = {
   SiHtml5: <SiHtml5 />,
   SiCss: <SiCss />,
   SiJavascript: <SiJavascript />,
-  SiTypescript: <SiTypescript />,
   SiReact: <SiReact />,
-  SiNextdotjs: <SiNextdotjs />,
-  SiTailwindcss: <SiTailwindcss />,
   SiPython: <SiPython />,
-  SiNodedotjs: <SiNodedotjs />,
-  SiExpress: <SiExpress />,
-  SiPostman: <SiPostman />,
-  SiMongodb: <SiMongodb />,
   SiPostgresql: <SiPostgresql />,
   SiMysql: <SiMysql />,
   SiGit: <SiGit />,
   SiGithub: <SiGithub />,
   SiDocker: <SiDocker />,
   SiVscodium: <SiVscodium />,
-  SiDart: <SiDart />,
-  SiFlutter: <SiFlutter />,
   SiScikitlearn: <SiScikitlearn />,
   SiOpenai: <Cpu />,
 };

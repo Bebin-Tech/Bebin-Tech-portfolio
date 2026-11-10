@@ -25,21 +25,34 @@ export default function Navbar({ theme, changeTheme }: NavbarProps) {
   const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-
-      // Determine active section
-      const sections = navLinks.map((l) => l.href.slice(1));
-      for (const id of [...sections].reverse()) {
-        const el = document.getElementById(id);
-        if (el && window.scrollY >= el.offsetTop - 120) {
-          setActiveSection(id);
-          break;
-        }
-      }
+    // Cache section positions on layout changes; scrolling only reads scrollY.
+    let frame = 0;
+    let positions: { id: string; top: number }[] = [];
+    const update = () => {
+      frame = 0;
+      const y = window.scrollY;
+      setScrolled(y > 20);
+      setActiveSection([...positions].reverse().find(section => y >= section.top - 120)?.id ?? "");
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const measure = () => {
+      positions = navLinks.flatMap(link => {
+        const el = document.getElementById(link.href.slice(1));
+        return el ? [{ id: el.id, top: el.getBoundingClientRect().top + window.scrollY }] : [];
+      });
+      update();
+    };
+    const handleScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
+    const resize = new ResizeObserver(measure);
+    resize.observe(document.body);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", measure);
+    measure();
+    return () => {
+      cancelAnimationFrame(frame);
+      resize.disconnect();
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", measure);
+    };
   }, []);
 
   const handleNavClick = (href: string) => {

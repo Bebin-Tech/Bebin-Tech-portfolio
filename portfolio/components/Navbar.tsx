@@ -87,7 +87,7 @@ export default function Navbar({ theme, changeTheme }: NavbarProps) {
       >
         <div
           style={{
-            maxWidth: "1280px",
+            maxWidth: "1208px",
             margin: "0 auto",
             padding: "0 1.5rem",
             height: "64px",

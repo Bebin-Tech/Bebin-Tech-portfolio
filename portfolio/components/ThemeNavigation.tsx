@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 export default function ThemeNavigation() {
-  const [theme, setTheme] = useState<"dark" | "light" | "aurora">("dark");
+  const [theme, setTheme] = useState<"dark" | "light" | "aurora">("aurora");
 
   useEffect(() => {
     const timeout = setTimeout(() => {

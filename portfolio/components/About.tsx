@@ -3,7 +3,7 @@
 import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { MapPin, Code2, Lightbulb, Heart, RotateCw } from "lucide-react";
+import { MapPin, Code2, Lightbulb, Heart } from "lucide-react";
 import { personalInfo } from "@/data/portfolio";
 import { soundEffects } from "@/lib/soundEffects";
 
@@ -99,7 +99,7 @@ function AboutAvatar3D() {
         onMouseLeave={handleMouseLeave}
         onClick={triggerSpin}
         onMouseEnter={() => soundEffects.playHover(1.1)}
-        title="Click to spin 360°"
+        title="Spin portrait"
       >
         <div
           style={{
@@ -135,30 +135,6 @@ function AboutAvatar3D() {
                 display: "block",
               }}
             />
-
-            {/* Click to spin prompt on avatar */}
-            <div
-              style={{
-                position: "absolute",
-                top: "12px",
-                right: "12px",
-                background: "rgba(10,10,15,0.75)",
-                backdropFilter: "blur(10px)",
-                border: "1px solid rgba(6,182,212,0.4)",
-                borderRadius: "9999px",
-                padding: "0.25rem 0.65rem",
-                display: "flex",
-                alignItems: "center",
-                gap: "0.35rem",
-                color: "var(--accent-light)",
-                fontSize: "0.72rem",
-                fontWeight: 600,
-                boxShadow: "0 4px 12px rgba(0,0,0,0.4)",
-              }}
-            >
-              <RotateCw size={12} className={isSpinning ? "animate-spin" : ""} />
-              360°
-            </div>
 
             {/* Bottom mini status badge */}
             <div

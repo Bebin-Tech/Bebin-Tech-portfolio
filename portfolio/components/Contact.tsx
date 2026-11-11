@@ -73,21 +73,18 @@ export default function Contact() {
       label: "Email",
       value: personalInfo.email,
       href: `mailto:${personalInfo.email}`,
-      color: "#06b6d4",
     },
     {
       icon: <FaInstagram size={20} />,
       label: "Instagram",
       value: "instagram.com/bebin.tech",
       href: personalInfo.instagram,
-      color: "#e1306c",
     },
     {
       icon: <FaGithub size={20} />,
       label: "GitHub",
       value: personalInfo.github.replace("https://", ""),
       href: personalInfo.github,
-      color: "#ffffff",
     },
   ];
 
@@ -181,7 +178,7 @@ export default function Contact() {
                       padding: "1rem 1.25rem",
                     }}
                     onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLElement).style.borderColor = `${link.color}55`;
+                      (e.currentTarget as HTMLElement).style.borderColor = "var(--accent)";
                     }}
                     onMouseLeave={(e) => {
                       (e.currentTarget as HTMLElement).style.borderColor = "var(--border)";
@@ -192,12 +189,12 @@ export default function Contact() {
                         width: "42px",
                         height: "42px",
                         borderRadius: "0.6rem",
-                        background: `${link.color}12`,
-                        border: `1px solid ${link.color}25`,
+                        background: "var(--accent-glow)",
+                        border: "1px solid var(--glass-border)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        color: link.color,
+                        color: "var(--accent)",
                         flexShrink: 0,
                       }}
                     >

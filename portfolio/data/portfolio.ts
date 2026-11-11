@@ -66,7 +66,7 @@ export const projects: Project[] = [
     description: "A campus resource platform for Karpagam Academy of Higher Education. Tracks classroom availability, manages room reservations, and coordinates class sessions with conflict detection and availability notifications.",
     highlights: ["Classroom availability", "Room booking & queues", "Campus administration"],
     tech: ["React", "Django REST Framework", "MySQL", "Tailwind CSS"],
-    github: "https://github.com/Bebin-Tech/KAHE-CMS.",
+    github: "https://github.com/Bebin-Tech/KAHE-CMS",
   },
   {
     id: 3,
@@ -84,7 +84,8 @@ export const projects: Project[] = [
  description:"A linear regression experiment on generated student data using four inputs: study hours, attendance, previous marks, and sleep. Includes a dataset, exploratory plots, an 80/20 train/test split, evaluation code, and a local Streamlit interface. Synthetic-data results are not evidence of performance on real students.",
  highlights:["4 input features", "80/20 train/test split", "MAE, RMSE & R² evaluation"],
  tech:["Python", "pandas", "scikit-learn", "Streamlit"],
- github:"https://github.com/Bebin-Tech/Student-performance-pridiction-python-project",
+ github:"https://github.com/Bebin-Tech/student-performance-prediction",
+ demo:"https://bebin-tech.github.io/student-performance-prediction/",
  image:"/images/projects/student-eda.png", imageAlt:"Repository exploratory plot of study hours and final marks in generated student data",
  },
 ];

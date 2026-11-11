@@ -9,7 +9,7 @@ export default function Hero() {
       <div className="professional-copy">
         <span className="opportunity-badge"><i /> Seeking ML / Full Stack internships · 2026–27</span>
         <p className="intro-eyebrow">DEVELOPER · CREATOR · PROBLEM SOLVER</p>
-        <h1>Hi, I’m <span className="gradient-text">Bebin R.</span><br />I turn ideas into<br />working products.</h1>
+        <h1>Hi, I’m <span className="gradient-text">Bebin R.</span></h1>
         <p className="professional-description">AI & Data Science student and ML intern. I build React applications with Django and Flask, and explore predictive models in Python.</p>
         <div className="professional-actions"><a className="btn-primary" href="#projects">Explore my work <ArrowUpRight size={18}/></a><a className="btn-secondary" href={personalInfo.resumeUrl} download><Download size={16}/> Download résumé</a></div>
         <div className="professional-social"><span>LET’S CONNECT</span><a href={personalInfo.github} aria-label="GitHub" target="_blank" rel="noreferrer"><FaGithub/></a><a href={`mailto:${personalInfo.email}`}>Say hello <ArrowUpRight size={14}/></a></div>

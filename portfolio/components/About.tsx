@@ -244,7 +244,7 @@ export default function About() {
             >
               {[
                 { value: "25+", label: "Full-stack projects" },
-                { value: "1", label: "ML learning project" },
+                { value: "3", label: "ML learning projects" },
                 { value: "2025", label: "Degree started" },
                 { value: "May 2026", label: "ML internship started" },
               ].map((stat) => (

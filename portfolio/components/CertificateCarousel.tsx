@@ -4,13 +4,12 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 
 export default function CertificateCarousel({ children }: { children: ReactNode }) {
   const track = useRef<HTMLDivElement>(null);
-  const [paused, setPaused] = useState(false);
-  const [hovered, setHovered] = useState(false);
+  const [pointerInside, setPointerInside] = useState(false);
   const [focused, setFocused] = useState(false);
 
   useEffect(() => {
     const row = track.current;
-    if (!row || paused || hovered || focused) return;
+    if (!row || pointerInside || focused) return;
 
     const timer = window.setInterval(() => {
       if (document.hidden || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -22,19 +21,13 @@ export default function CertificateCarousel({ children }: { children: ReactNode 
       row.scrollTo({ left, behavior: "smooth" });
     }, 4200);
     return () => window.clearInterval(timer);
-  }, [paused, hovered, focused]);
+  }, [pointerInside, focused]);
 
   return <>
-    <div className="certificate-heading">
-      <h3>Certificate Gallery</h3>
-      <button type="button" aria-controls="certificate-track" onClick={() => setPaused(!paused)}>
-        {paused ? "Resume motion" : "Pause motion"}
-      </button>
-    </div>
+    <h3 className="certificate-heading">Certificate Gallery</h3>
     <div id="certificate-track" ref={track} className="certificate-track"
-      onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
-      onFocus={() => setFocused(true)} onBlur={event => setFocused(event.currentTarget.contains(event.relatedTarget))}
-      onTouchStart={() => setPaused(true)}>
+      onPointerEnter={() => setPointerInside(true)} onPointerLeave={() => setPointerInside(false)}
+      onFocus={() => setFocused(true)} onBlur={event => setFocused(event.currentTarget.contains(event.relatedTarget))}>
       {children}
     </div>
   </>;

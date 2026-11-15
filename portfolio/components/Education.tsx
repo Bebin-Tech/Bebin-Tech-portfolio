@@ -4,6 +4,7 @@
 import { GraduationCap } from "lucide-react";
 import { education } from "@/data/portfolio";
 import Image from "next/image";
+import CertificateCarousel from "./CertificateCarousel";
 
 const certificateGallery = [
   { title: "Modern Web Application Development with MERN Stack", issuer: "KAHE · KGiSL MicroCollege", date: "5–9 January 2026 · 30 hours", file: "certificate-1.jpeg" },
@@ -26,8 +27,7 @@ export default function Education() {
    </article>
   </div>
       <div id="certificates" className="certificate-gallery" style={{ maxWidth: "1280px", margin: "3rem auto 0", scrollMarginTop: "100px" }}>
-        <h3 style={{ fontSize: "1.4rem", fontWeight: 700, marginBottom: "1.5rem" }}>Certificate Gallery</h3>
-        <div className="certificate-gallery-grid">
+        <CertificateCarousel>
           {certificateGallery.map(cert => <article className="certificate-gallery-card" key={cert.file}>
             <a className="certificate-preview" href={`/certificates/${cert.file}`} target="_blank" rel="noopener noreferrer" aria-label={`View certificate: ${cert.title}`}>
               <Image src={`/certificates/${cert.file}`} alt={`${cert.title} certificate awarded to Bebin`} fill sizes="(max-width: 700px) 90vw, (max-width: 1100px) 45vw, 380px" style={{ objectFit: "contain" }} />
@@ -37,7 +37,7 @@ export default function Education() {
               <a href={`/certificates/${cert.file}`} target="_blank" rel="noopener noreferrer" aria-label={`View certificate ↗: ${cert.title}`}>View certificate ↗</a>
             </div>
           </article>)}
-        </div>
+        </CertificateCarousel>
       </div>
 
  </section>;

@@ -9,6 +9,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://bebin-tech.vercel.app"),
+  verification: {google:"0TXbsBa2FcHmQusQslvk7IGzQTeaNZ_O51F5AX3kLGU"},
   title: "Bebin R — Full Stack & ML Developer",
   description:
     "Bebin R — AI & Data Science Student | Full Stack Developer | Machine Learning Enthusiast based in Coimbatore, Tamil Nadu, India.",

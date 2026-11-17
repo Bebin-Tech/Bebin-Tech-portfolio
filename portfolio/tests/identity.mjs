@@ -4,6 +4,7 @@ const canonical='https://bebin-tech.vercel.app';
 const response=await fetch(base);
 assert.equal(response.status,200);
 const html=await response.text();
+assert.ok(html.includes('name="google-site-verification" content="0TXbsBa2FcHmQusQslvk7IGzQTeaNZ_O51F5AX3kLGU"'));
 const graphs=[...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m=>JSON.parse(m[1]));
 const entities=graphs.flatMap(g=>g['@graph']||[g]);
 const person=entities.find(e=>e['@type']==='Person');

@@ -125,7 +125,7 @@ function AboutAvatar3D() {
             }}
           >
             <Image
-              src="/images/bebin.jpg"
+              src="/images/bebin-r.png"
               alt="Bebin R — Full Stack Developer"
               fill
               sizes="(max-width: 768px) 90vw, 320px"

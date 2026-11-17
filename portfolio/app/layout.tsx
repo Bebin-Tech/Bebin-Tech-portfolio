@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import {portraitUrl} from "@/lib/identity";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -23,14 +24,17 @@ export const metadata: Metadata = {
     "Bebin R",
     "Coimbatore",
   ],
-  authors: [{ name: "Bebin R" }],
+  authors: [{ name: "Bebin R", url: "https://bebin-tech-projects.vercel.app/bebin-r" }],
   creator: "Bebin R",
   openGraph: {
     title: "Bebin R — Full Stack & ML Developer",
     description:
       "Bebin R — AI & Data Science Student | Full Stack Developer | Machine Learning Enthusiast.",
     type: "website",
-    locale: "en_US",
+    locale: "en_IN",
+    url: "https://bebin-tech.vercel.app/",
+    siteName: "Bebin R",
+    images: [{url:portraitUrl,alt:"Bebin R — Developer & Founder of Bebin Tech"}],
   },
   twitter: {
     card: "summary_large_image",
@@ -38,7 +42,7 @@ export const metadata: Metadata = {
     description:
       "AI & Data Science Student, ML Intern at Techvolt Software, Full Stack Developer.",
   },
-  robots: "index, follow",
+  robots: {index:true,follow:true,"max-image-preview":"large"},
 };
 
 export default function RootLayout({

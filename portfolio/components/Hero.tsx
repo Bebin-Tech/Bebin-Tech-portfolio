@@ -20,7 +20,7 @@ export default function Hero() {
           <div className="profile-starfield">{Array.from({ length: 32 }, (_, i) => <i key={i} style={{ left: `${(i * 37 + 9) % 100}%`, top: `${(i * 53 + 17) % 100}%`, opacity: .35 + (i % 4) * .2, width: i % 5 === 0 ? 3 : 2, height: i % 5 === 0 ? 3 : 2 }} />)}</div>
           <div className="profile-orbit" />
         </div>
-        <div className="profile-image"><Image src="/images/bebin.jpg" alt="Bebin R, full stack developer" fill sizes="(max-width: 800px) 90vw, 420px" preload/><span className="profile-location"><MapPin size={13}/> Coimbatore, India</span></div>
+        <div className="profile-image"><Image src="/images/bebin-r.png" alt="Bebin R, full stack developer" fill sizes="(max-width: 800px) 90vw, 420px" preload/><span className="profile-location"><MapPin size={13}/> Coimbatore, India</span></div>
         <div className="profile-caption"><div><strong>Bebin R</strong><p>Full Stack & ML Developer</p></div><span className="profile-monogram">BR</span></div>
         <div className="profile-specialties"><span><Code2 size={16}/> Web applications</span><span><BrainCircuit size={16}/> Machine learning</span></div>
       </div>

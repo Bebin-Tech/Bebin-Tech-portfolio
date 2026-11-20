@@ -558,8 +558,8 @@ input,textarea{transition:border-color .3s,box-shadow .3s,background .3s}
 @media(prefers-reduced-motion:reduce) { .galaxy-spiral-arms,.galaxy-stars i:nth-child(9n),.galaxy-meteor { animation:none; } }
 
 .certificate-heading { font-size:1.4rem; font-weight:700; margin-bottom:1.5rem; }
-.certificate-track { display:grid; grid-auto-flow:column; grid-auto-columns:calc((100% - 44px) / 3); gap:22px; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:10px; scrollbar-width:thin; }
-.certificate-track > article { scroll-snap-align:start; }
+.certificate-track { display:grid; grid-auto-flow:column; grid-auto-columns:calc((100% - 44px) / 3); gap:22px; overflow-x:auto; scroll-behavior:auto; padding-bottom:10px; scrollbar-width:none; }
+.certificate-track::-webkit-scrollbar { display:none; }
 .certificate-gallery-card { overflow:hidden; border:1px solid var(--border); border-radius:16px; background:var(--bg-surface); display:flex; flex-direction:column; }
 .certificate-preview { display:block; position:relative; aspect-ratio:1.42; background:#f2f3f5; border-bottom:1px solid var(--border); }
 .certificate-details { padding:22px; display:flex; flex-direction:column; flex:1; align-items:flex-start; }

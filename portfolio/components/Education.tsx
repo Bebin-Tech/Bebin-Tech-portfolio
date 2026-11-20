@@ -7,6 +7,11 @@ import Image from "next/image";
 import CertificateCarousel from "./CertificateCarousel";
 
 const certificateGallery = [
+  { title: "Soft Skill Development", issuer: "NPTEL · IIT Kharagpur", date: "January–March 2026 · 8 weeks · Elite", file: "certificate-6.pdf", preview: "certificate-6.jpg" },
+  { title: "Business and Sustainable Development", issuer: "NPTEL · IIT Bombay", date: "August–September 2026 · 4 weeks", file: "certificate-7.pdf", preview: "certificate-7.jpg" },
+  { title: "R Programming for Data Science | A Complete Courses to Learn", issuer: "Infosys Springboard", date: "24 September 2026", file: "certificate-8.pdf", preview: "certificate-8.jpg" },
+  { title: "Learn Artificial Intelligence with TensorFlow", issuer: "Infosys Springboard", date: "24 September 2026", file: "certificate-9.pdf", preview: "certificate-9.jpg" },
+  { title: "Natural Language Processing Fundamentals", issuer: "Infosys Springboard", date: "24 September 2026", file: "certificate-10.pdf", preview: "certificate-10.jpg" },
   { title: "Modern Web Application Development with MERN Stack", issuer: "KAHE · KGiSL MicroCollege", date: "5–9 January 2026 · 30 hours", file: "certificate-1.jpeg" },
   { title: "Acquiring Data", issuer: "FutureSkills Prime · nasscom", date: "16 March 2026", file: "certificate-2.jpeg" },
   { title: "Data Science & Analytics", issuer: "HP LIFE · HP Foundation", date: "2025", file: "certificate-3.jpeg" },
@@ -30,7 +35,7 @@ export default function Education() {
         <CertificateCarousel>
           {certificateGallery.map(cert => <article className="certificate-gallery-card" key={cert.file}>
             <a className="certificate-preview" href={`/certificates/${cert.file}`} target="_blank" rel="noopener noreferrer" aria-label={`View certificate: ${cert.title}`}>
-              <Image src={`/certificates/${cert.file}`} alt={`${cert.title} certificate awarded to Bebin`} fill sizes="(max-width: 700px) 90vw, (max-width: 1100px) 45vw, 380px" style={{ objectFit: "contain" }} />
+              <Image src={`/certificates/${cert.preview ?? cert.file}`} alt={`${cert.title} certificate awarded to Bebin`} fill sizes="(max-width: 700px) 90vw, (max-width: 1100px) 45vw, 380px" style={{ objectFit: "contain" }} />
             </a>
             <div className="certificate-details">
               <h4>{cert.title}</h4><p>{cert.issuer}</p><p className="certificate-date">{cert.date}</p>

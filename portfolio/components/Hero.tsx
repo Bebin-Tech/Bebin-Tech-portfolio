@@ -14,16 +14,18 @@ export default function Hero() {
         <div className="professional-actions"><a className="btn-primary" href="#projects">Explore my work <ArrowUpRight size={18}/></a><a className="btn-secondary" href={personalInfo.resumeUrl} download><Download size={16}/> Download résumé</a></div>
         <div className="professional-social"><span>LET’S CONNECT</span><a href={personalInfo.github} aria-label="GitHub" target="_blank" rel="noreferrer"><FaGithub/></a><a href={`mailto:${personalInfo.email}`}>Say hello <ArrowUpRight size={14}/></a></div>
       </div>
-      <div className="professional-profile profile-space">
+      <figure className="professional-profile profile-space" style={{margin:0}}>
         <div className="profile-cosmos" aria-hidden="true">
           <div className="profile-nebula" />
           <div className="profile-starfield">{Array.from({ length: 32 }, (_, i) => <i key={i} style={{ left: `${(i * 37 + 9) % 100}%`, top: `${(i * 53 + 17) % 100}%`, opacity: .35 + (i % 4) * .2, width: i % 5 === 0 ? 3 : 2, height: i % 5 === 0 ? 3 : 2 }} />)}</div>
           <div className="profile-orbit" />
         </div>
-        <div className="profile-image"><Image src="/images/bebin.jpg" alt="Bebin R, full stack developer" fill sizes="(max-width: 800px) 90vw, 420px" preload/><span className="profile-location"><MapPin size={13}/> Coimbatore, India</span></div>
-        <div className="profile-caption"><div><strong>Bebin R</strong><p>Full Stack & ML Developer</p></div><span className="profile-monogram">BR</span></div>
-        <div className="profile-specialties"><span><Code2 size={16}/> Web applications</span><span><BrainCircuit size={16}/> Machine learning</span></div>
-      </div>
+        <div className="profile-image"><Image src="/images/bebin-r.png" alt="Portrait of Bebin R, software developer and founder of Bebin Tech" fill sizes="(max-width: 800px) 90vw, 420px" preload/><span className="profile-location"><MapPin size={13}/> Coimbatore, India</span></div>
+        <figcaption>
+          <div className="profile-caption"><div><strong>Bebin R</strong><p>Developer & Founder of Bebin Tech</p></div><span className="profile-monogram">BR</span></div>
+          <div className="profile-specialties"><span><Code2 size={16}/> Web applications</span><span><BrainCircuit size={16}/> Machine learning</span></div>
+        </figcaption>
+      </figure>
     </div>
     <div className="professional-stack"><span>MY EVERYDAY TOOLKIT</span><div>{["React", "Python", "Django", "Flask", "PostgreSQL", "MySQL"].map(item=><span key={item}>{item}</span>)}</div><a href="#skills">View skills <ArrowUpRight size={14}/></a></div>
   </section>;

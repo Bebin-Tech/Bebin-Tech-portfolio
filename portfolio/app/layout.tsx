@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import {portraitUrl} from "@/lib/identity";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -8,6 +9,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://bebin-tech.vercel.app"),
+  verification: {google:"0TXbsBa2FcHmQusQslvk7IGzQTeaNZ_O51F5AX3kLGU"},
   title: "Bebin R — Full Stack & ML Developer",
   description:
     "Bebin R — AI & Data Science Student | Full Stack Developer | Machine Learning Enthusiast based in Coimbatore, Tamil Nadu, India.",
@@ -23,22 +25,26 @@ export const metadata: Metadata = {
     "Bebin R",
     "Coimbatore",
   ],
-  authors: [{ name: "Bebin R" }],
+  authors: [{ name: "Bebin R", url: "https://bebin-tech-projects.vercel.app/bebin-r" }],
   creator: "Bebin R",
   openGraph: {
     title: "Bebin R — Full Stack & ML Developer",
     description:
       "Bebin R — AI & Data Science Student | Full Stack Developer | Machine Learning Enthusiast.",
     type: "website",
-    locale: "en_US",
+    locale: "en_IN",
+    url: "https://bebin-tech.vercel.app/",
+    siteName: "Bebin R",
+    images: [{url:portraitUrl,width:843,height:1024,type:"image/png",alt:"Bebin R — software developer and founder of Bebin Tech"}],
   },
   twitter: {
     card: "summary_large_image",
     title: "Bebin R — Full Stack & ML Developer",
     description:
       "AI & Data Science Student, ML Intern at Techvolt Software, Full Stack Developer.",
+    images: [{url:portraitUrl,alt:"Bebin R — software developer and founder of Bebin Tech"}],
   },
-  robots: "index, follow",
+  robots: {index:true,follow:true,"max-image-preview":"large"},
 };
 
 export default function RootLayout({

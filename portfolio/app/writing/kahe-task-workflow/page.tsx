@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-export const metadata: Metadata = { title: "KAHE TMS: roles and approval workflow | Bebin R", description: "Project notes on the four roles, task handoffs, and access controls in KAHE TMS." };
+export const metadata: Metadata = { title: "KAHE TMS: roles and approval workflow | Bebin R", description: "Project notes on the four roles, task handoffs, and access controls in KAHE TMS.", alternates:{canonical:'https://bebin-tech.vercel.app/writing/kahe-task-workflow'} };
 export default function TaskWorkflowNotes() {
  return <main className="project-notes">
   <Link href="/#projects">← Back to projects</Link>

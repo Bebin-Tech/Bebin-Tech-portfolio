@@ -3,6 +3,7 @@ import { FaGithub } from "react-icons/fa6";
 import { projects, personalInfo } from "@/data/portfolio";
 import Image from "next/image";
 import Link from "next/link";
+import CertificateCarousel from "./CertificateCarousel";
 
 export default function Projects() {
   return (
@@ -12,12 +13,15 @@ export default function Projects() {
           <div><p className="section-label">Featured work</p><h2 className="section-title">Projects & Applications</h2></div>
           <p className="section-subtitle">Purpose-built platforms for academic coordination, campus resources, and connected teams.</p>
         </div>
-        <div className="repository-grid">
+        <CertificateCarousel heading={null} trackId="project-track" shuffle={false}>
           {projects.map((project) => (
-            <article className={`repository-card ${project.featured ? "repository-featured" : "repository-supporting"}`} key={project.id}>
+            <article className="certificate-gallery-card project-gallery-card" key={project.id}>
+              <div className="project-gallery-preview">
               <div className="repository-card-top"><span className="repository-icon"><FolderGit2 size={23}/></span><span className="repository-label">{project.featured ? "FEATURED PROJECT" : "PROJECT STUDY"}</span></div>
               {project.workflow && <figure className="project-workflow"><figcaption>Workflow overview</figcaption><ol>{project.workflow.map(step => <li key={step}>{step}</li>)}</ol></figure>}
               {project.image && <figure className="project-evidence"><Image src={project.image} alt={project.imageAlt ?? project.title} width={800} height={600} sizes="(max-width:700px) 90vw, 550px" /><figcaption>Exploratory plot from the project repository · generated data</figcaption></figure>}
+              </div>
+              <div className="project-gallery-details">
               <h3>{project.title}</h3>
               <p className="repository-subtitle">{project.subtitle}</p>
               <p className="repository-description">{project.description}</p>
@@ -30,9 +34,10 @@ export default function Projects() {
                 {project.demo && <a className="btn-secondary" href={project.demo} target="_blank" rel="noopener noreferrer">Live demo <ArrowUpRight size={16}/></a>}
                 {project.writeup && <Link className="btn-secondary" href={project.writeup}>Read project notes <ArrowUpRight size={16}/></Link>}
               </div>
+              </div>
             </article>
           ))}
-        </div>
+        </CertificateCarousel>
         <a className="repository-all" href={personalInfo.github} target="_blank" rel="noopener noreferrer">Browse all repositories <ArrowUpRight size={16}/></a>
       </div>
     </section>

@@ -2,7 +2,17 @@
 
 import { Children, Fragment, useEffect, useRef, useState, type ReactNode } from "react";
 
-export default function CertificateCarousel({ children }: { children: ReactNode }) {
+export default function CertificateCarousel({
+  children,
+  heading = "Certificate Gallery",
+  trackId = "certificate-track",
+  shuffle = true,
+}: {
+  children: ReactNode;
+  heading?: string | null;
+  trackId?: string;
+  shuffle?: boolean;
+}) {
   const track = useRef<HTMLDivElement>(null);
   const [focused, setFocused] = useState(false);
   const cards = Children.toArray(children);
@@ -12,14 +22,14 @@ export default function CertificateCarousel({ children }: { children: ReactNode 
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
       const shuffled = Array.from({ length: cardCount }, (_, index) => index);
-      for (let index = shuffled.length - 1; index > 0; index--) {
+      for (let index = shuffle ? shuffled.length - 1 : 0; index > 0; index--) {
         const swapIndex = Math.floor(Math.random() * (index + 1));
         [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
       }
       setOrder(shuffled);
     });
     return () => cancelAnimationFrame(frame);
-  }, [cardCount]);
+  }, [cardCount, shuffle]);
 
   useEffect(() => {
     const row = track.current;
@@ -62,8 +72,8 @@ export default function CertificateCarousel({ children }: { children: ReactNode 
   const orderedCards = order?.length === cardCount ? order.map(index => cards[index]) : cards;
 
   return <>
-    <h3 className="certificate-heading">Certificate Gallery</h3>
-    <div id="certificate-track" ref={track} className="certificate-track"
+    {heading && <h3 className="certificate-heading">{heading}</h3>}
+    <div id={trackId} ref={track} className="certificate-track"
       onFocus={() => setFocused(true)} onBlur={event => setFocused(event.currentTarget.contains(event.relatedTarget))}>
       {orderedCards}
       {cardCount > 1 && orderedCards.map((card, index) => <Fragment key={`loop-${index}`}>{card}</Fragment>)}

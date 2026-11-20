@@ -15,7 +15,12 @@ assert.equal(person['@id'],'https://bebin-tech-projects.vercel.app/bebin-r#perso
 assert.equal(person.worksFor['@id'],company['@id']);
 assert.equal(company.founder['@id'],person['@id']);
 assert.equal(profile.mainEntity['@id'],person['@id']);
-assert.equal(profile.primaryImageOfPage.contentUrl,person.image);
+assert.equal(profile.primaryImageOfPage['@id'],person.image['@id']);
+assert.equal(person.image.contentUrl,canonical+'/images/bebin-r.png');
+assert.equal(person.image.about['@id'],person['@id']);
+assert.equal(person.mainEntityOfPage['@id'],profile['@id']);
+assert.equal(person.image.width,843);
+assert.equal(person.image.height,1024);
 assert.ok(person.sameAs.includes('https://github.com/Bebin-Tech'));
 assert.ok(!person.award,'Do not invent awards');
 assert.ok(html.includes('href="https://bebin-tech-projects.vercel.app/bebin-r"'));
@@ -25,10 +30,19 @@ assert.equal(new URL(html.match(/rel="canonical" href="([^"]+)"/)?.[1]).href,can
 const portrait=await fetch(base+'/images/bebin-r.png');assert.equal(portrait.status,200);assert.match(portrait.headers.get('content-type')||'',/image/);
 const imageUrl=html.match(/property="og:image" content="([^"]+)"/)?.[1];
 assert.ok(imageUrl,'Social preview image');
+assert.equal(imageUrl,person.image.contentUrl,'Use the actual portrait, not a generated text card');
+assert.equal(html.match(/name="twitter:image" content="([^"]+)"/)?.[1],imageUrl);
+assert.equal([...html.matchAll(/property="og:image" content=/g)].length,1,'No competing OG image');
+assert.ok(html.includes('<figcaption><div class="profile-caption">'));
 const share=await fetch(base+new URL(imageUrl).pathname);assert.equal(share.status,200);assert.match(share.headers.get('content-type')||'',/image\/png/);
 assert.ok((await share.arrayBuffer()).byteLength>10000,'Portrait preview contains image content');
 const sitemap=await (await fetch(base+'/sitemap.xml')).text();
-assert.ok(sitemap.includes('<image:loc>'+person.image+'</image:loc>'));
+assert.ok(sitemap.includes('<image:loc>'+person.image.contentUrl+'</image:loc>'));
+for(const oldPath of ['/opengraph-image','/twitter-image']){
+  const redirect=await fetch(base+oldPath+'?legacy=1',{redirect:'manual'});
+  assert.equal(redirect.status,308);
+  assert.equal(new URL(redirect.headers.get('location'),base).pathname,'/images/bebin-r.png');
+}
 assert.ok(sitemap.includes(canonical+'/writing/kahe-task-workflow'));
 const robots=await (await fetch(base+'/robots.txt')).text();assert.ok(robots.includes('Sitemap: '+canonical+'/sitemap.xml'));
 console.log('Identity checks passed: linked Person and Organization, profile, portrait preview, canonicals, official links, sitemap and robots.');

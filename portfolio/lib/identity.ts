@@ -5,6 +5,20 @@ export const companyUrl='https://bebin-tech-projects.vercel.app';
 export const personId=companyUrl+'/bebin-r#person';
 export const organizationId=companyUrl+'/#organization';
 export const portraitUrl=portfolioUrl+'/images/bebin-r.png';
+export const portrait={
+  '@type':'ImageObject',
+  '@id':portfolioUrl+'/#portrait',
+  url:portraitUrl,
+  contentUrl:portraitUrl,
+  name:'Bebin R — official portrait',
+  caption:'Bebin R, software developer and founder of Bebin Tech',
+  description:'Portrait of Bebin R, the developer behind this personal portfolio and founder of Bebin Tech.',
+  encodingFormat:'image/png',
+  width:843,
+  height:1024,
+  representativeOfPage:true,
+  about:{'@id':personId},
+};
 export const identityDescription=personalInfo.bio+' He is also the founder of Bebin Tech, providing software projects and development services for students and businesses.';
 
 export const identityGraph={
@@ -12,7 +26,8 @@ export const identityGraph={
   '@graph':[
     {
       '@type':'Person','@id':personId,name:personalInfo.name,
-      url:portfolioUrl+'/',image:portraitUrl,description:identityDescription,
+      url:portfolioUrl+'/',image:portrait,description:identityDescription,
+      mainEntityOfPage:{'@id':portfolioUrl+'/#profile'},
       jobTitle:'Founder & Software Developer',
       sameAs:[companyUrl+'/bebin-r',personalInfo.github],
       worksFor:{'@id':organizationId},
@@ -29,7 +44,7 @@ export const identityGraph={
       '@type':'ProfilePage','@id':portfolioUrl+'/#profile',
       url:portfolioUrl+'/',name:'Bebin R — Developer & Founder of Bebin Tech',
       mainEntity:{'@id':personId},
-      primaryImageOfPage:{'@type':'ImageObject',url:portraitUrl,contentUrl:portraitUrl,caption:'Bebin R — software developer and founder of Bebin Tech'},
+      primaryImageOfPage:{'@id':portrait['@id']},
     },
     {
       '@type':'WebSite','@id':portfolioUrl+'/#website',url:portfolioUrl+'/',

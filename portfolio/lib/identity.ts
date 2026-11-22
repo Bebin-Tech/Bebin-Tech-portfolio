@@ -4,7 +4,7 @@ export const portfolioUrl='https://bebin-tech.vercel.app';
 export const companyUrl='https://bebin-tech-projects.vercel.app';
 export const personId=companyUrl+'/bebin-r#person';
 export const organizationId=companyUrl+'/#organization';
-export const portraitUrl=portfolioUrl+'/images/bebin-r.png';
+export const portraitUrl=portfolioUrl+'/images/bebin-r-portrait.png';
 export const portrait={
   '@type':'ImageObject',
   '@id':portfolioUrl+'/#portrait',
@@ -14,8 +14,8 @@ export const portrait={
   caption:'Bebin R, software developer and founder of Bebin Tech',
   description:'Portrait of Bebin R, the developer behind this personal portfolio and founder of Bebin Tech.',
   encodingFormat:'image/png',
-  width:843,
-  height:1024,
+  width:660,
+  height:652,
   representativeOfPage:true,
   about:{'@id':personId},
 };

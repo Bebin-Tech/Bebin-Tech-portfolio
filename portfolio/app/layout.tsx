@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: "https://bebin-tech.vercel.app/",
     siteName: "Bebin R",
-    images: [{url:portraitUrl,width:843,height:1024,type:"image/png",alt:"Bebin R — software developer and founder of Bebin Tech"}],
+    images: [{url:portraitUrl,width:660,height:652,type:"image/png",alt:"Bebin R — software developer and founder of Bebin Tech"}],
   },
   twitter: {
     card: "summary_large_image",

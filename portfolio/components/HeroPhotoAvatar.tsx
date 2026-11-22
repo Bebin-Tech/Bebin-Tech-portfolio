@@ -321,7 +321,7 @@ export default function HeroPhotoAvatar() {
             }}
           >
             <Image
-              src="/images/bebin-r.png"
+              src="/images/bebin-r-portrait.png"
               alt="Bebin R - Full Stack Developer"
               fill
               priority

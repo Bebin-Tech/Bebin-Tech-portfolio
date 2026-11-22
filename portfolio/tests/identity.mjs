@@ -16,18 +16,18 @@ assert.equal(person.worksFor['@id'],company['@id']);
 assert.equal(company.founder['@id'],person['@id']);
 assert.equal(profile.mainEntity['@id'],person['@id']);
 assert.equal(profile.primaryImageOfPage['@id'],person.image['@id']);
-assert.equal(person.image.contentUrl,canonical+'/images/bebin-r.png');
+assert.equal(person.image.contentUrl,canonical+'/images/bebin-r-portrait.png');
 assert.equal(person.image.about['@id'],person['@id']);
 assert.equal(person.mainEntityOfPage['@id'],profile['@id']);
-assert.equal(person.image.width,843);
-assert.equal(person.image.height,1024);
+assert.equal(person.image.width,660);
+assert.equal(person.image.height,652);
 assert.ok(person.sameAs.includes('https://github.com/Bebin-Tech'));
 assert.ok(!person.award,'Do not invent awards');
 assert.ok(html.includes('href="https://bebin-tech-projects.vercel.app/bebin-r"'));
 assert.ok(html.includes('Founder of Bebin Tech'));
 assert.ok(html.includes('max-image-preview:large'));
 assert.equal(new URL(html.match(/rel="canonical" href="([^"]+)"/)?.[1]).href,canonical+'/');
-const portrait=await fetch(base+'/images/bebin-r.png');assert.equal(portrait.status,200);assert.match(portrait.headers.get('content-type')||'',/image/);
+const portrait=await fetch(base+'/images/bebin-r-portrait.png');assert.equal(portrait.status,200);assert.match(portrait.headers.get('content-type')||'',/image/);
 const imageUrl=html.match(/property="og:image" content="([^"]+)"/)?.[1];
 assert.ok(imageUrl,'Social preview image');
 assert.equal(imageUrl,person.image.contentUrl,'Use the actual portrait, not a generated text card');
@@ -41,7 +41,7 @@ assert.ok(sitemap.includes('<image:loc>'+person.image.contentUrl+'</image:loc>')
 for(const oldPath of ['/opengraph-image','/twitter-image']){
   const redirect=await fetch(base+oldPath+'?legacy=1',{redirect:'manual'});
   assert.equal(redirect.status,308);
-  assert.equal(new URL(redirect.headers.get('location'),base).pathname,'/images/bebin-r.png');
+  assert.equal(new URL(redirect.headers.get('location'),base).pathname,'/images/bebin-r-portrait.png');
 }
 assert.ok(sitemap.includes(canonical+'/writing/kahe-task-workflow'));
 const robots=await (await fetch(base+'/robots.txt')).text();assert.ok(robots.includes('Sitemap: '+canonical+'/sitemap.xml'));

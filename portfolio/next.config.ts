@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   redirects() {
     return ["/opengraph-image", "/twitter-image"].map((source) => ({
       source,
-      destination: "/images/bebin-r.png",
+      destination: "/images/bebin-r-portrait.png",
       permanent: true,
     }));
   },

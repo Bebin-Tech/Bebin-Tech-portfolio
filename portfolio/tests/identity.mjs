@@ -46,3 +46,11 @@ for(const oldPath of ['/opengraph-image','/twitter-image']){
 assert.ok(sitemap.includes(canonical+'/writing/kahe-task-workflow'));
 const robots=await (await fetch(base+'/robots.txt')).text();assert.ok(robots.includes('Sitemap: '+canonical+'/sitemap.xml'));
 console.log('Identity checks passed: linked Person and Organization, profile, portrait preview, canonicals, official links, sitemap and robots.');
+
+for(const path of ['/images/bebin-r.png','/images/bebin.jpg','/images/avatar.jpg','/images/profile.png']){
+ for(const old of [path,'/_next/image?url='+encodeURIComponent(path)+'&w=640&q=75']){
+  const response=await fetch(base+old,{redirect:'manual'});assert.equal(response.status,308,'Retired portrait redirect '+old);
+  assert.equal(new URL(response.headers.get('location'),base).pathname,'/images/bebin-r-portrait.png');
+ }
+}
+console.log('All retired portrait files and optimized variants redirect to the current photo.');
